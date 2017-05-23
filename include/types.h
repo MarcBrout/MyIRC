@@ -47,6 +47,7 @@ struct s_client
 
 struct s_server
 {
+  socket server_socket;
   t_client clients[FD_MAX];
   t_channel channels[CHANNEL_MAX];
 };
