@@ -10,6 +10,7 @@ include_directories(
 
 set(MYIRC
         ./include
-        )
+        ./include/types.h
+        main.c)
 
 add_executable(myirc ${MYIRC})
