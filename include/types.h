@@ -2,11 +2,11 @@
 # define TYPES_H_
 
 # include <stdbool.h>
+# include "circular_tools.h"
 
 # define NICKNAME_MAX_SIZE 10
 # define USERNAME_MAX_SIZE 513
 # define USER_MAX_CHAN 10
-# define BUFFER_MAX_SIZE 4096
 # define FD_MAX 255
 # define CHANNEL_MAX 50
 # define CHANNEL_NAME_SIZE 201
@@ -42,7 +42,7 @@ struct s_client
   char nickname[NICKNAME_MAX_SIZE];
   char username[USERNAME_MAX_SIZE];
   int channels[USER_MAX_CHAN];
-  char buffer[BUFFER_MAX_SIZE];
+  t_circular c;
 };
 
 struct s_server
