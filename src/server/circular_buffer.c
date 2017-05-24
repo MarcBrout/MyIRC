@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "circular_tools.h"
+#include "types.h"
 
 void strncircular(t_circular *c, char *str, int n)
 {
@@ -42,7 +42,7 @@ bool find_command(t_circular *c)
   return (false);
 }
 
-bool strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
+void strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
 {
   int i;
 

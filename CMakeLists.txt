@@ -11,6 +11,13 @@ include_directories(
 set(MYIRC
         ./include
         ./include/types.h
-        main.c server/circular_buffer.c include/circular_tools.h)
+        include/socket.h
+        include/proceed.h
+        include/circular_tools.h
+        src/server/circular_buffer.c
+        src/server/server.c
+        src/server/socket.c
+        src/server/proceed.c
+        src/server/server_init.c include/server.h)
 
 add_executable(myirc ${MYIRC})
