@@ -58,9 +58,10 @@ static int read_client(t_client *client, Socket sock)
     perror("Read from client error");
     return (1);
   }
-  if (!len ||
+  if (!len || strchr(buff, 4) ||
       (len == sizeof(ctrl_c) && !memcmp(buff, ctrl_c, sizeof(ctrl_c))))
   {
+    printf("CTRLD\n");
     close(sock);
     memset(client, 0, sizeof(t_client));
     return (0);
