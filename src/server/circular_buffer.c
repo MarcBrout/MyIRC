@@ -48,6 +48,7 @@ void strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
 
   i = 0;
   memset(out, 0, MESSAGE_MAX_SIZE);
+  printf("socket buffer = !%s!\n", c->buffer);
   while (!end(c, c->pos))
   {
     out[i] = c->buffer[c->pos];
@@ -58,5 +59,6 @@ void strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
   c->buffer[c->pos] = 0;
   out[i] = 0;
   INCR(c->pos);
-  c->len -= 1;
+  INCR(c->pos);
+  c->len -= 2;
 }

@@ -18,6 +18,6 @@ set(MYIRC
         src/server/server.c
         src/server/socket.c
         src/server/proceed.c
-        src/server/server_init.c include/server.h)
+        src/server/server_init.c include/server.h src/server/proceed_commands.c src/server/replies.c include/replies.h src/server/command_pass.c include/commands.h src/server/command_nick.c src/server/command_quit.c)
 
 add_executable(myirc ${MYIRC})

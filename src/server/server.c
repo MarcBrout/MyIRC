@@ -30,7 +30,7 @@ static int set_fds(t_server *server, fd_set *fds_read, fd_set *fds_write)
     if (server->clients[sock].active)
     {
       FD_SET(sock, fds_read);
-      if (IS_CBUFF_FULL(server->clients[sock].w))
+      if (find_command(&server->clients[sock].w))
         FD_SET(sock, fds_write);
       fd_max = sock;
     }

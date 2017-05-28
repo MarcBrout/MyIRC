@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Thu May 25 00:33:35 2017 brout_m
+## Last update Sun May 28 13:52:27 2017 brout_m
 ##
 
 SERVER=		server
@@ -16,7 +16,13 @@ SERVER_RAW_SRC=	circular_buffer.c	\
 		proceed.c		\
 		server.c		\
 		socket.c		\
-		server_init.c
+		server_init.c		\
+		replies.c		\
+		proceed_commands.c 	\
+		command_pass.c	\
+		command_nick.c \
+		command_quit.c
+
 
 SERVER_SRC=	$(addprefix $(SERVER_FOLDER), $(SERVER_RAW_SRC))
 

@@ -42,9 +42,11 @@ struct s_client
 {
   bool active;
   bool connected;
+  bool quit;
   enum e_rights right;
   char nickname[NICKNAME_MAX_SIZE];
   char username[USERNAME_MAX_SIZE];
+  char realname[MESSAGE_MAX_SIZE];
   int channels[USER_MAX_CHAN];
   t_circular r;
   t_circular w;
@@ -52,6 +54,7 @@ struct s_client
 
 struct s_server
 {
+  char address[16];
   Socket server_socket;
   t_client clients[FD_MAX];
   t_channel channels[CHANNEL_MAX];

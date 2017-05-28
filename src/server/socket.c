@@ -1,7 +1,9 @@
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <stdint.h>
 #include <netdb.h>
 #include <stdio.h>
+#include <string.h>
 #include "types.h"
 
 int accept_new_client(t_server *server)
@@ -11,11 +13,14 @@ int accept_new_client(t_server *server)
   socklen_t len;
   
   len = sizeof(addr);
-  if ((sock = accept(server->server_socket, (sockaddr_t *)&addr, &len)) < 0)
+  if ((sock = accept(server->server_socket, (sockaddr_t *)&addr, &len)) < 0 ||
+      getsockname(sock, (sockaddr_t *)&addr, &len) < 0)
   {
     perror("Client accept error");
     return (1);
   }
+  if (!server->address)
+    strcat(server->address, inet_ntoa(addr.sin_addr));
   server->clients[sock].active = true;
   return (0);
 }
