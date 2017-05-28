@@ -2,6 +2,7 @@
 
 char const *replies[ERR_END] =
     {
+        ":No topic is set",
         "Welcome to the Internet Relay Network",
         ":No such nick/channel",
         ":No such server",

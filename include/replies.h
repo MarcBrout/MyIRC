@@ -9,6 +9,7 @@
 
 enum e_replies
 {
+  RPL_NOTOPIC,
   RPL_WELCOME,
   ERR_NOSUCHNICK,
   ERR_NOSUCHSERVER,
@@ -58,6 +59,7 @@ enum e_replies
 };
 
 extern char const *replies[ERR_END];
+int needmoreparams(t_server *srv, Socket sock, char *line);
 int reply(t_server *srv, Socket sock, char *const fmt, ...);
 
 #endif /* !MYIRC_REPLIES_H */

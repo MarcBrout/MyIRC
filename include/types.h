@@ -1,6 +1,7 @@
 #ifndef TYPES_H_
 # define TYPES_H_
 
+# include <stddef.h>
 # include <stdbool.h>
 # include "circular_tools.h"
 
@@ -8,7 +9,7 @@
 # define USERNAME_MAX_SIZE 513
 # define USER_MAX_CHAN 10
 # define FD_MAX 255
-# define CHANNEL_MAX 50
+# define CHANNEL_MAX 51
 # define CHANNEL_NAME_SIZE 201
 # define IS_CBUFF_FULL(n) ((n).len > 0)
 
@@ -35,6 +36,8 @@ struct s_channel
 {
   enum e_mode mode;
   char name[CHANNEL_NAME_SIZE];
+  char topic[MESSAGE_MAX_SIZE];
+  size_t clients_count;
   Socket clients[FD_MAX];
 };
 
@@ -47,6 +50,7 @@ struct s_client
   char nickname[NICKNAME_MAX_SIZE];
   char username[USERNAME_MAX_SIZE];
   char realname[MESSAGE_MAX_SIZE];
+  size_t channel_count;
   int channels[USER_MAX_CHAN];
   t_circular r;
   t_circular w;

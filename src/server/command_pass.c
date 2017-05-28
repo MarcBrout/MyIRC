@@ -35,6 +35,5 @@ int command_pass(t_server *srv, Socket sock, char *cmd)
                   replies[ERR_NEEDMOREPARAMS]));
   if (strcmp(password, line2))
     return (reply(srv, sock, "%s %s\r\n", "464", replies[ERR_PASSWDMISMATCH]));
-  srv->clients[sock].connected = true;
   return (0);
 }

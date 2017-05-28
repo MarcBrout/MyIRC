@@ -4,7 +4,7 @@
 
 char const *replies[ERR_END];
 
-static int needmoreparams(t_server *srv, Socket sock, char *line)
+int needmoreparams(t_server *srv, Socket sock, char *line)
 {
   return (reply(srv, sock, "%s %s %s\r\n", "461", line,
                 replies[ERR_NEEDMOREPARAMS]));
@@ -21,14 +21,14 @@ int command_user(t_server *srv, Socket sock, char *cmd)
                   replies[ERR_ALREADYREGISTRED]));
   if (!(param = strtok(NULL, " ")))
     return (needmoreparams(srv, sock, line));
-  strcat(srv->clients[sock].realname, param);
+  strcat(srv->clients[sock].username, param);
   if (!(param = strtok(NULL, " ")) || !(param = strtok(NULL, " ")) ||
       !(param = strtok(NULL, " ")))
     return (needmoreparams(srv, sock, line));
   strcat(srv->clients[sock].realname, &param[1]);
   if (!strlen(srv->clients[sock].nickname))
     return (0);
-  srv->clients[sock].connected = 1;
+  srv->clients[sock].connected = true;
   return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
                 srv->clients[sock].nickname, srv->clients[sock].username,
                 srv->address));

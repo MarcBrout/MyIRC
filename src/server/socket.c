@@ -19,7 +19,7 @@ int accept_new_client(t_server *server)
     perror("Client accept error");
     return (1);
   }
-  if (!server->address)
+  if (!strlen(server->address))
     strcat(server->address, inet_ntoa(addr.sin_addr));
   server->clients[sock].active = true;
   return (0);
