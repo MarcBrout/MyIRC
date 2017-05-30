@@ -18,11 +18,11 @@ static void parting_from_all_channel(t_server *srv, int sock)
 
 int command_quit(t_server *srv, Socket sock, char *cmd)
 {
-  static char *quit = ":Quit";
+  static char *quit = "Quit";
   char *param;
 
   strtok(cmd, " ");
-  if (!(param = strtok(NULL, " ")))
+  if (!(param = strtok(NULL, ":")))
   {
     if (user_send_all_channel(sock, srv, quit))
       return (1);

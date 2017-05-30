@@ -35,7 +35,7 @@ static t_command const commands[42] =
       {"MODE", 4, &unsupported_cmd},
       {"TOPIC", 5, &unsupported_cmd},
       {"NAMES", 5, &unsupported_cmd},
-      {"LIST", 4, &unsupported_cmd},
+      {"LIST", 4, &command_list},
       {"INVITE", 6, &unsupported_cmd},
       {"KICK", 4, &unsupported_cmd},
       {"VERSION", 7, &unsupported_cmd},

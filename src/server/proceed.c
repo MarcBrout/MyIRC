@@ -11,8 +11,16 @@ static int send_client(t_client *client, Socket sock)
   char out[MESSAGE_MAX_SIZE];
 
   memset(out, 0, MESSAGE_MAX_SIZE);
-  while (strfromcircular(&client->w, out))
+  while (strfromcircular(&client->w, out) ||
+      (strlen(out) && !strncmp("322", out, 3)))
   {
+    printf("OUT = %s\n", out);
+    len = strlen(out);
+    if (len && !strncmp("322", out, 3))
+    {
+      out[len] = '\r';
+      out[len + 1] = '\n';
+    }
     if (write(sock, out, strlen(out)) < 0)
     {
       perror("Write to client error");

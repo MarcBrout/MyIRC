@@ -9,7 +9,7 @@ void strncircular(t_circular *c, char *str, int n)
   int cpos;
 
   i = 0;
-  cpos = c->pos;
+  cpos = c->pos + c->len;
   while (i < n)
   {
     c->buffer[cpos] = str[i];
