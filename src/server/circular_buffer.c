@@ -42,23 +42,26 @@ bool find_command(t_circular *c)
   return (false);
 }
 
-void strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
+bool strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
 {
   int i;
 
   i = 0;
   memset(out, 0, MESSAGE_MAX_SIZE);
   printf("socket buffer = !%s!\n", c->buffer);
-  while (!end(c, c->pos))
+  while (!end(c, c->pos) && i < MESSAGE_MAX_SIZE - 1)
   {
     out[i] = c->buffer[c->pos];
     INCR(c->pos);
     ++i;
     --c->len;
   }
-  c->buffer[c->pos] = 0;
+  //c->buffer[c->pos] = 0; TODO do not remove, testing purpose
   out[i] = 0;
+  if (!end(c, c->pos))
+    return (true);
   INCR(c->pos);
   INCR(c->pos);
   c->len -= 2;
+  return (false);
 }

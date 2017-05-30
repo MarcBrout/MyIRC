@@ -5,18 +5,23 @@
 #include "socket.h"
 #include "proceed.h"
 
-static int write_client(t_client *client, Socket sock)
+static int send_client(t_client *client, Socket sock)
 {
-  char out[MESSAGE_MAX_SIZE];
   size_t len;
+  char out[MESSAGE_MAX_SIZE];
 
-  printf("trying to find...\n");
-  while (find_command(&client->w))
+  memset(out, 0, MESSAGE_MAX_SIZE);
+  while (strfromcircular(&client->w, out))
   {
-    printf("found!...\n");
+    if (write(sock, out, strlen(out)) < 0)
+    {
+      perror("Write to client error");
+      return (1);
+    }
     memset(out, 0, MESSAGE_MAX_SIZE);
-    strfromcircular(&client->w, out);
-    len = strlen(out);
+  }
+  if ((len = strlen(out)))
+  {
     out[len] = '\r';
     out[len + 1] = '\n';
     if (write(sock, out, strlen(out)) < 0)
@@ -24,6 +29,18 @@ static int write_client(t_client *client, Socket sock)
       perror("Write to client error");
       return (1);
     }
+  }
+  return (0);
+}
+
+static int write_client(t_client *client, Socket sock)
+{
+  printf("trying to find...\n");
+  while (find_command(&client->w))
+  {
+    printf("found!...\n");
+    if (send_client(client, sock))
+      return (1);
     if (client->quit)
     {
       memset(client, 0, sizeof(*client));
