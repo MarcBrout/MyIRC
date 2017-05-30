@@ -10,28 +10,24 @@ int needmoreparams(t_server *srv, Socket sock, char *line)
                 replies[ERR_NEEDMOREPARAMS]));
 }
 
-int command_user(t_server *srv, Socket sock, char *cmd)
+static int check_disponibility(t_server *srv, char *nick)
 {
-  char *line;
-  char *param;
+  size_t channel = 0;
+  size_t client = 0;
 
-  line = strtok(cmd, " ");
-  if (srv->clients[sock].connected)
-    return (reply(srv, sock, "%s %s %s\r\n", "462", line,
-                  replies[ERR_ALREADYREGISTRED]));
-  if (!(param = strtok(NULL, " ")))
-    return (needmoreparams(srv, sock, line));
-  strcat(srv->clients[sock].username, param);
-  if (!(param = strtok(NULL, " ")) || !(param = strtok(NULL, " ")) ||
-      !(param = strtok(NULL, " ")))
-    return (needmoreparams(srv, sock, line));
-  strcat(srv->clients[sock].realname, &param[1]);
-  if (!strlen(srv->clients[sock].nickname))
-    return (0);
-  srv->clients[sock].connected = true;
-  return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
-                srv->clients[sock].nickname, srv->clients[sock].username,
-                srv->address));
+  while (channel < CHANNEL_MAX)
+  {
+    if (!strcmp(nick, srv->channels[channel].name))
+      return (0);
+    ++channel;
+  }
+  while (client < FD_MAX)
+  {
+    if (!strcmp(nick, srv->clients[client].nickname))
+      return (0);
+    ++client;
+  }
+  return (1);
 }
 
 int command_nick(t_server *srv, Socket sock, char *cmd)
@@ -41,16 +37,18 @@ int command_nick(t_server *srv, Socket sock, char *cmd)
   strtok(cmd, " ");
   line = strtok(NULL, " ");
   if (!line)
-    return (reply(srv, sock, "%s %s\r\n", "431", replies[ERR_NONICKNAMEGIVEN]));
+    return (reply(srv, sock, "431 %s\r\n", replies[ERR_NONICKNAMEGIVEN]));
   if (strlen(line) >= NICKNAME_MAX_SIZE)
-    return (reply(srv, sock, "%s %s %s\r\n", "432", line,
+    return (reply(srv, sock, "432 %s %s\r\n", line,
                   replies[ERR_ERRONEUSNICKNAME]));
+  if (!check_disponibility(srv, line))
+    return (reply(srv, sock, "433 %s %s\r\n", line,
+                  replies[ERR_NICKNAMEINUSE]));
   strcat(srv->clients[sock].nickname, line);
   if (!strlen(srv->clients[sock].username))
     return (0);
-  printf("nick ok\n");
-  srv->clients[sock].connected = 1;
-  return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
+  srv->clients[sock].connected = true;
+  return (reply(srv, sock, "001 %s %s!%s@%s\r\n", replies[RPL_WELCOME],
                 srv->clients[sock].nickname, srv->clients[sock].username,
                 srv->address));
 }

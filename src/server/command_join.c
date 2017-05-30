@@ -25,11 +25,11 @@ int already_in_channel(t_server *srv, Socket sock, int channel)
   size_t i;
 
   i = 0;
-  printf("channel index = %d\n", channel);
-  printf("channel : %s, client count = %ld\n", srv->channels[channel].name,
-  srv->channels[channel].clients_count);
-  printf_int_buffer(srv->channels[channel].clients, srv->channels[channel].clients_count);
-  printf_int_buffer(srv->clients[sock].channels, srv->clients[sock].channel_count);
+  //printf("channel index = %d\n", channel);
+  //printf("channel : %s, client count = %ld\n", srv->channels[channel].name,
+  //srv->channels[channel].clients_count);
+  //printf_int_buffer(srv->channels[channel].clients, srv->channels[channel].clients_count);
+  //printf_int_buffer(srv->clients[sock].channels, srv->clients[sock].channel_count);
   while (i < srv->clients[sock].channel_count &&
       srv->clients[sock].channels[i] != channel + 1)
     ++i;

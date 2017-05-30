@@ -34,7 +34,7 @@ static t_command const commands[42] =
       {"PART", 4, &command_part},
       {"MODE", 4, &unsupported_cmd},
       {"TOPIC", 5, &unsupported_cmd},
-      {"NAMES", 5, &unsupported_cmd},
+      {"NAMES", 5, &command_names},
       {"LIST", 4, &command_list},
       {"INVITE", 6, &unsupported_cmd},
       {"KICK", 4, &unsupported_cmd},
@@ -84,7 +84,8 @@ int proceed_commands(t_server *srv)
       printf("socket = %d, cmd = !%s!\n", sock, cmd);
       while (commands[i].exec != NULL)
       {
-        if (!strncmp(commands[i].cmd, cmd, commands[i].len))
+        if (!strncmp(commands[i].cmd, cmd, commands[i].len) &&
+            (cmd[commands[i].len] == ' ' || !cmd[commands[i].len]))
         {
           if (commands[i].exec(srv, sock, cmd))
             return (1);
