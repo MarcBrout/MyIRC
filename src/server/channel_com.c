@@ -13,9 +13,10 @@ int send_to_channel(Socket sender, t_server *srv,
   {
     if (sender != sock)
     {
-      printf("Sending to ... %d\n", channel->clients[sock]);
-      reply(srv, channel->clients[sock], "%s :%s\r\n",
-            srv->clients[sender].nickname, message);
+      reply(srv, channel->clients[sock], ":%s@%s :%s\r\n",
+            srv->clients[sender].nickname,
+            channel->name,
+            message);
     }
     ++sock;
   }

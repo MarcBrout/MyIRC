@@ -67,6 +67,30 @@ static t_command const commands[42] =
       {"NULL", 4, NULL}
     };
 
+static void remove_prefix(char cmd[MESSAGE_MAX_SIZE])
+{
+  int i;
+
+  if (cmd[0] == ':')
+  {
+    while (cmd[0] != ' ')
+    {
+      i = 0;
+      while (cmd[i])
+      {
+        cmd[i] = cmd[i + 1];
+        ++i;
+      }
+    }
+    i = 0;
+    while (cmd[i])
+    {
+      cmd[i] = cmd[i + 1];
+      ++i;
+    }
+  }
+}
+
 int proceed_commands(t_server *srv)
 {
   char cmd[MESSAGE_MAX_SIZE];
@@ -82,6 +106,7 @@ int proceed_commands(t_server *srv)
       memset(cmd, 0, MESSAGE_MAX_SIZE);
       strfromcircular(&srv->clients[sock].r, cmd);
       printf("socket = %d, cmd = !%s!\n", sock, cmd);
+      remove_prefix(cmd);
       while (commands[i].exec != NULL)
       {
         if (!strncmp(commands[i].cmd, cmd, commands[i].len) &&
