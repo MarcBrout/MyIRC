@@ -2,6 +2,7 @@
 // Created by brout_m on 28/05/17.
 //
 
+#include <stdio.h>
 #include <string.h>
 #include "channels.h"
 #include "commands.h"
@@ -14,6 +15,9 @@ static int channel_part(t_server *srv, Socket sock, int channel, char *msg)
   if (send_to_channel(sock, srv, &srv->channels[channel - 1], msg))
     return (1);
   parting_from_channel(srv, sock, channel);
+  printf("channel - 1 = %d\n", channel);
+  if (!srv->channels[channel].clients_count)
+    memset(&srv->channels[channel], 0, sizeof(t_channel));
   return (0);
 }
 

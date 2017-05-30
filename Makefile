@@ -24,7 +24,8 @@ SERVER_RAW_SRC=	circular_buffer.c	\
 		command_quit.c	\
 		command_join.c \
 		channel_com.c \
-		command_part.c
+		command_part.c \
+		command_privmsg.c
 
 
 SERVER_SRC=	$(addprefix $(SERVER_FOLDER), $(SERVER_RAW_SRC))

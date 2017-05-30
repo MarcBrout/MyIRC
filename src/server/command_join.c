@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include "replies.h"
 
@@ -25,9 +26,9 @@ static int join_channel(t_server *srv, Socket sock, int channel)
     return (reply(srv, sock, "%s %s %s\r\n", "405",
                   srv->channels[channel].name, replies[ERR_TOOMANYCHANNELS]));
   srv->channels[channel].clients[srv->channels[channel].clients_count] = sock;
-  ++(srv->channels[channel].clients_count);
+  ++srv->channels[channel].clients_count;
   srv->clients[sock].channels[srv->clients[sock].channel_count] = channel + 1;
-  ++(srv->clients[sock].channel_count);
+  ++srv->clients[sock].channel_count;
   if (strlen(srv->channels[channel].topic))
     return (reply(srv, sock, "%s %s :%s\r\n", "332",
                   srv->channels[channel].name, srv->channels[channel].topic));
@@ -76,6 +77,9 @@ int command_join(t_server *srv, Socket sock, char *cmd)
   if ((index = find_channel(srv, channel)) < 0)
     return (create_channel(srv, sock, channel));
   if (already_in_channel(srv, sock, index))
+  {
+    printf("ALREADY IN CHANNEL : %d\n", index);
     return (0);
+  }
   return (join_channel(srv, sock, index));
 }

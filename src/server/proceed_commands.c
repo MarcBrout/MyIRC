@@ -46,7 +46,7 @@ static t_command const commands[42] =
       {"TRACE", 4, &unsupported_cmd},
       {"ADMIN", 5, &unsupported_cmd},
       {"INFO", 4, &unsupported_cmd},
-      {"PRIVMSG", 7, &unsupported_cmd},
+      {"PRIVMSG", 7, &command_privmsg},
       {"NOTICE", 6, &unsupported_cmd},
       {"NOTICE", 6, &unsupported_cmd},
       {"WHO", 3, &unsupported_cmd},

@@ -12,5 +12,6 @@ int command_user(t_server *srv, Socket sock, char *cmd);
 int command_quit(t_server *srv, Socket sock, char *cmd);
 int command_join(t_server *srv, Socket sock, char *cmd);
 int command_part(t_server *srv, Socket sock, char *cmd);
+int command_privmsg(t_server *srv, Socket sock, char *cmd);
 
 #endif /* !MYIRC_COMMANDS_H_ */

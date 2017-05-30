@@ -10,8 +10,10 @@ static int write_client(t_client *client, Socket sock)
   char out[MESSAGE_MAX_SIZE];
   size_t len;
 
-  if (find_command(&client->w))
+  printf("trying to find...\n");
+  while (find_command(&client->w))
   {
+    printf("found!...\n");
     memset(out, 0, MESSAGE_MAX_SIZE);
     strfromcircular(&client->w, out);
     len = strlen(out);
