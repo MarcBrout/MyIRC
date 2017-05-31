@@ -1,54 +1,63 @@
+/*
+** command_privmsg.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
+**
+** Made by brout_m
+** Login   <marc.brout@epitech.eu>
+**
+** Started on  Wed May 31 11:30:33 2017 brout_m
+** Last update Wed May 31 11:31:59 2017 brout_m
+*/
 #include <string.h>
 #include <channels.h>
 #include <stdio.h>
 #include "replies.h"
 
-char const *replies[ERR_END];
+char const		*replies[ERR_END];
 
-static int is_channel(t_server *srv, char const *channel)
+static int		is_channel(t_server *srv, char const *channel)
 {
-  int i;
+  int			i;
 
   i = 0;
   while (i < CHANNEL_MAX)
-  {
-    if (!strcmp(channel, srv->channels[i].name))
+    {
+      if (!strcmp(channel, srv->channels[i].name))
       return (i);
-    ++i;
-  }
+      ++i;
+    }
   return (-1);
 }
 
-static int is_client(t_server *srv, char const *client)
+static int		is_client(t_server *srv, char const *client)
 {
-  int i;
+  int			i;
 
   i = 0;
   while (i < FD_MAX)
-  {
-    if (!strcmp(client, srv->clients[i].nickname) ||
-        !strcmp(client, srv->clients[i].username))
-      return (i);
-    ++i;
-  }
+    {
+      if (!strcmp(client, srv->clients[i].nickname) ||
+	  !strcmp(client, srv->clients[i].username))
+	return (i);
+      ++i;
+    }
   return (-1);
 }
 
-static int send_to_client(t_server *srv, int sender,
-                          int client, char *msg)
+static int		send_to_client(t_server *srv, int sender,
+				       int client, char *msg)
 {
   if (reply(srv, client, ":%s :%s\r\n",
-               srv->clients[sender].nickname, msg) < 0)
+	    srv->clients[sender].nickname, msg) < 0)
     return (1);
   return (0);
 }
 
-int command_privmsg(t_server *srv, Socket sock, char *cmd)
+int			command_privmsg(t_server *srv, Socket sock, char *cmd)
 {
-  char *line;
-  char *target;
-  char *msg;
-  int channel;
+  char			*line;
+  char			*target;
+  char			*msg;
+  int			channel;
 
   line = strtok(cmd, " ");
   if (!(target = strtok(NULL, " ")))
@@ -57,11 +66,11 @@ int command_privmsg(t_server *srv, Socket sock, char *cmd)
   if (!(msg = strtok(NULL, ":")))
     return (reply(srv, sock, "%s %s\r\n", "412", replies[ERR_NOTEXTTOSEND]));
   if ((channel = is_channel(srv, target)) < 0)
-  {
-    if ((channel = is_client(srv, target)) < 0)
-      return (reply(srv, sock , "%s %s %s\r\n", "401", target,
-                    replies[ERR_NOSUCHNICK]));
-    return (send_to_client(srv, sock, channel, msg));
-  }
+    {
+      if ((channel = is_client(srv, target)) < 0)
+	return (reply(srv, sock , "%s %s %s\r\n", "401", target,
+		      replies[ERR_NOSUCHNICK]));
+      return (send_to_client(srv, sock, channel, msg));
+    }
   return (send_to_channel(sock, srv, &srv->channels[channel], msg));
 }

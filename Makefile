@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Sun May 28 13:52:27 2017 brout_m
+## Last update Wed May 31 11:45:24 2017 brout_m
 ##
 
 SERVER=		server
@@ -19,15 +19,15 @@ SERVER_RAW_SRC=	circular_buffer.c	\
 		server_init.c		\
 		replies.c		\
 		proceed_commands.c 	\
-		command_pass.c	\
-		command_nick.c \
-		command_quit.c	\
-		command_join.c \
-		channel_com.c \
-		command_part.c \
-		command_privmsg.c \
-		command_list.c \
-		command_names.c \
+		command_pass.c		\
+		command_nick.c 		\
+		command_quit.c		\
+		command_join.c 		\
+		channel_com.c 		\
+		command_part.c 		\
+		command_privmsg.c 	\
+		command_list.c 		\
+		command_names.c 	\
 		command_user.c
 
 

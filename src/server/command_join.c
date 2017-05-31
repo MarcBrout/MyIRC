@@ -1,44 +1,34 @@
+/*
+** command_join.c for myric in /home/brout_m/rendu/system/PSU_2016_myirc
+**
+** Made by brout_m
+** Login   <marc.brout@epitech.eu>
+**
+** Started on  Wed May 31 11:23:10 2017 brout_m
+** Last update Wed May 31 11:25:20 2017 brout_m
+*/
 #include <stdio.h>
 #include <string.h>
 #include "replies.h"
 
-char const *replies[ERR_END];
+char const	*replies[ERR_END];
 
-void printf_int_buffer(int *buff, int size)
-{
-  int i;
-
-  i = 0;
-  printf("[");
-  while (i < size)
-  {
-    printf("%d", buff[i]);
-    if (i < size - 1)
-      printf(",");
-    ++i;
-  }
-  printf("]\n");
-}
-
-int already_in_channel(t_server *srv, Socket sock, int channel)
+int		already_in_channel(t_server *srv, Socket sock, int channel)
 {
   size_t i;
 
   i = 0;
-  //printf("channel index = %d\n", channel);
-  //printf("channel : %s, client count = %ld\n", srv->channels[channel].name,
-  //srv->channels[channel].clients_count);
-  //printf_int_buffer(srv->channels[channel].clients, srv->channels[channel].clients_count);
-  //printf_int_buffer(srv->clients[sock].channels, srv->clients[sock].channel_count);
   while (i < srv->clients[sock].channel_count &&
-      srv->clients[sock].channels[i] != channel + 1)
-    ++i;
+	 srv->clients[sock].channels[i] != channel + 1)
+    {
+      ++i;
+    }
   if (i != srv->clients[sock].channel_count)
     return (1);
   return (0);
 }
 
-static int join_channel(t_server *srv, Socket sock, int channel)
+static int	join_channel(t_server *srv, Socket sock, int channel)
 {
   if (srv->channels[channel].clients_count == FD_MAX - 1)
     return (reply(srv, sock, "%s %s %s\r\n", "471",
@@ -57,13 +47,15 @@ static int join_channel(t_server *srv, Socket sock, int channel)
                 replies[RPL_NOTOPIC]));
 }
 
-static int create_channel(t_server *srv, Socket sock, char const *name)
+static int	create_channel(t_server *srv, Socket sock, char const *name)
 {
-  int index;
+  int		index;
 
   index = 0;
   while (index < CHANNEL_MAX && strlen(srv->channels[index].name))
-    ++index;
+    {
+      ++index;
+    }
   if (index == CHANNEL_MAX)
     return (reply(srv, sock, "%s %s %s\r\n", "403", name,
                   replies[ERR_NOSUCHCHANNEL]));
@@ -71,25 +63,25 @@ static int create_channel(t_server *srv, Socket sock, char const *name)
   return (join_channel(srv, sock, index));
 }
 
-int find_channel(t_server *srv, char *chan)
+int		find_channel(t_server *srv, char *chan)
 {
-  int channel;
+  int		channel;
 
   channel = 0;
   while (channel < CHANNEL_MAX)
-  {
-    if (!strcmp(chan, srv->channels[channel].name))
-      return (channel);
-    ++channel;
-  }
+    {
+      if (!strcmp(chan, srv->channels[channel].name))
+	return (channel);
+      ++channel;
+    }
   return (-1);
 }
 
-int command_join(t_server *srv, Socket sock, char *cmd)
+int		command_join(t_server *srv, Socket sock, char *cmd)
 {
-  char *line;
-  char *channel;
-  int index;
+  char		*line;
+  char		*channel;
+  int		index;
 
   line = strtok(cmd, " ");
   channel = strtok(NULL, " ");
@@ -98,9 +90,6 @@ int command_join(t_server *srv, Socket sock, char *cmd)
   if ((index = find_channel(srv, channel)) < 0)
     return (create_channel(srv, sock, channel));
   if (already_in_channel(srv, sock, index))
-  {
-    printf("ALREADY IN CHANNEL : %d\n", index);
     return (0);
-  }
   return (join_channel(srv, sock, index));
 }

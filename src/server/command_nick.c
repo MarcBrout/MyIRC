@@ -1,38 +1,47 @@
+/*
+** command_nick.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
+**
+** Made by brout_m
+** Login   <marc.brout@epitech.eu>
+**
+** Started on  Wed May 31 11:27:44 2017 brout_m
+** Last update Wed May 31 11:28:11 2017 brout_m
+*/
 #include <string.h>
 #include <stdio.h>
 #include "replies.h"
 
-char const *replies[ERR_END];
+char const	*replies[ERR_END];
 
-int needmoreparams(t_server *srv, Socket sock, char *line)
+int		needmoreparams(t_server *srv, Socket sock, char *line)
 {
   return (reply(srv, sock, "%s %s %s\r\n", "461", line,
                 replies[ERR_NEEDMOREPARAMS]));
 }
 
-static int check_disponibility(t_server *srv, char *nick)
+static int	check_disponibility(t_server *srv, char *nick)
 {
-  size_t channel = 0;
-  size_t client = 0;
+  size_t	channel = 0;
+  size_t	client = 0;
 
   while (channel < CHANNEL_MAX)
-  {
-    if (!strcmp(nick, srv->channels[channel].name))
-      return (0);
-    ++channel;
-  }
+    {
+      if (!strcmp(nick, srv->channels[channel].name))
+	return (0);
+      ++channel;
+    }
   while (client < FD_MAX)
-  {
-    if (!strcmp(nick, srv->clients[client].nickname))
-      return (0);
-    ++client;
-  }
+    {
+      if (!strcmp(nick, srv->clients[client].nickname))
+	return (0);
+      ++client;
+    }
   return (1);
 }
 
-int command_nick(t_server *srv, Socket sock, char *cmd)
+int		command_nick(t_server *srv, Socket sock, char *cmd)
 {
-  char *line;
+  char		*line;
 
   strtok(cmd, " ");
   line = strtok(NULL, " ");

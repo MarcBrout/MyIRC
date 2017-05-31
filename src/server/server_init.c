@@ -1,15 +1,24 @@
+/*
+** server_init.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
+**
+** Made by brout_m
+** Login   <marc.brout@epitech.eu>
+**
+** Started on  Wed May 31 11:42:54 2017 brout_m
+** Last update Wed May 31 11:43:35 2017 brout_m
+*/
 #include <string.h>
 #include <stdlib.h>
 #include "types.h"
 
-static void circular_init(t_circular *c)
+static void		circular_init(t_circular *c)
 {
   c->len = 0;
   c->pos = 0;
   memset(c->buffer, 0, MESSAGE_MAX_SIZE);
 }
 
-void client_init(t_client *client)
+void			client_init(t_client *client)
 {
   client->active = false;
   client->connected = false;
@@ -21,33 +30,19 @@ void client_init(t_client *client)
   circular_init(&client->w);
 }
 
-void channel_init(t_channel *channel)
+void			channel_init(t_channel *channel)
 {
   channel->mode = NORMAL;
   memset(channel->name, 0, CHANNEL_NAME_SIZE);
   memset(channel->clients, 0, FD_MAX * sizeof(Socket));
 }
 
-t_server *server_init()
+t_server		*server_init()
 {
-  // Socket sock;
-  t_server *server;
+  t_server		*server;
 
   if (!(server = malloc(sizeof(t_server))))
     return (NULL);
   memset(server, 0, sizeof(t_server));
-/*  server->server_socket = 0;
-  sock = 0;
-  while (sock < FD_MAX)
-  {
-    client_init(&server->clients[sock]);
-    ++sock;
-  }
-  sock = 0;
-  while (sock < CHANNEL_MAX)
-  {
-    channel_init(&server->channels[sock]);
-    ++sock;
-  } */
   return (server);
 }

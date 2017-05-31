@@ -1,53 +1,62 @@
+/*
+** command_user.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
+**
+** Made by brout_m
+** Login   <marc.brout@epitech.eu>
+**
+** Started on  Wed May 31 11:32:44 2017 brout_m
+** Last update Wed May 31 11:33:54 2017 brout_m
+*/
 #include <stdio.h>
 #include <string.h>
 #include "replies.h"
 
-static void epur_str(char *cmd, char out[MESSAGE_MAX_SIZE])
+static void	epur_str(char *cmd, char out[MESSAGE_MAX_SIZE])
 {
-  int i = 0;
-  int j = 0;
+  int		i = 0;
+  int		j = 0;
 
   while (cmd[i])
-  {
-    if (i && cmd[i] == ' ' && cmd[i - 1] != ' ')
     {
-      out[j] = ' ';
-      ++j;
+      if (i && cmd[i] == ' ' && cmd[i - 1] != ' ')
+	{
+	  out[j] = ' ';
+	  ++j;
+	}
+      else if (cmd[i] != ' ')
+	{
+	  out[j] = cmd[i];
+	  ++j;
+	}
+      ++i;
     }
-    else if (cmd[i] != ' ')
-    {
-      out[j] = cmd[i];
-      ++j;
-    }
-    ++i;
-  }
   if (out[j] == ' ')
     out[j] = 0;
 }
 
-static bool verify_args(char out[MESSAGE_MAX_SIZE])
+static bool	verify_args(char out[MESSAGE_MAX_SIZE])
 {
-  int i = 0;
-  int spaces = 0;
+  int		i = 0;
+  int		spaces = 0;
 
   while (out[i])
-  {
-    if (out[i] == ' ')
-      ++spaces;
-    if (spaces == 4)
-      return (out[i + 1] == ':');
-    ++i;
-  }
+    {
+      if (out[i] == ' ')
+	++spaces;
+      if (spaces == 4)
+	return (out[i + 1] == ':');
+      ++i;
+    }
   return (false);
 }
 
-int command_user(t_server *srv, Socket sock, char *cmd)
+int		command_user(t_server *srv, Socket sock, char *cmd)
 {
-  char pure[MESSAGE_MAX_SIZE] = {};
-  char cpy[MESSAGE_MAX_SIZE] = {};
-  char name[USERNAME_MAX_SIZE] = {};
-  char *line;
-  char *param;
+  char		pure[MESSAGE_MAX_SIZE] = {};
+  char		cpy[MESSAGE_MAX_SIZE] = {};
+  char		name[USERNAME_MAX_SIZE] = {};
+  char		*line;
+  char		*param;
 
   strcat(cpy, cmd);
   line = strtok(cmd, " ");
