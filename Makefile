@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Wed May 31 11:45:24 2017 brout_m
+## Last update Wed May 31 12:01:24 2017 brout_m
 ##
 
 SERVER=		server
@@ -19,6 +19,7 @@ SERVER_RAW_SRC=	circular_buffer.c	\
 		server_init.c		\
 		replies.c		\
 		proceed_commands.c 	\
+		proceed_writes.c	\
 		command_pass.c		\
 		command_nick.c 		\
 		command_quit.c		\

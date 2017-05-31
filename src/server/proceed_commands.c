@@ -126,7 +126,6 @@ int			proceed_commands(t_server *srv)
 {
   char			cmd[MESSAGE_MAX_SIZE];
   Socket		sock;
-  int			i;
 
   sock = 0;
   while (sock < FD_MAX)
