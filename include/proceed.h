@@ -25,5 +25,6 @@ typedef struct		s_command
 
 int proceed(t_server *server, fd_set *fds_read, fd_set *fds_write);
 int proceed_commands(t_server *srv);
+int proceed_writes(t_server *server, fd_set *fds_write);
 
 #endif /* !PROCEED_H_ */

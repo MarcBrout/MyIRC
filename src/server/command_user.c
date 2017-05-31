@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:32:44 2017 brout_m
-** Last update Wed May 31 11:33:54 2017 brout_m
+** Last update Wed May 31 11:50:18 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -50,6 +50,19 @@ static bool	verify_args(char out[MESSAGE_MAX_SIZE])
   return (false);
 }
 
+static int	login_successful(t_server *srv,
+				 Socket sock, char *name, char *user)
+{
+  strcat(srv->clients[sock].realname, user);
+  strcat(srv->clients[sock].username, name);
+  if (!strlen(srv->clients[sock].nickname))
+    return (0);
+  srv->clients[sock].connected = true;
+  return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
+                srv->clients[sock].nickname, srv->clients[sock].username,
+                srv->address));
+}
+
 int		command_user(t_server *srv, Socket sock, char *cmd)
 {
   char		pure[MESSAGE_MAX_SIZE] = {};
@@ -70,12 +83,5 @@ int		command_user(t_server *srv, Socket sock, char *cmd)
   if (!verify_args(pure) || !strtok(NULL, " ") || !strtok(NULL, " "))
     return (needmoreparams(srv, sock, line));
   param = strtok(NULL, ":");
-  strcat(srv->clients[sock].realname, param);
-  strcat(srv->clients[sock].username, name);
-  if (!strlen(srv->clients[sock].nickname))
-    return (0);
-  srv->clients[sock].connected = true;
-  return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
-                srv->clients[sock].nickname, srv->clients[sock].username,
-                srv->address));
+  return (login_successful(srv, sock, name, param));
 }
