@@ -20,7 +20,7 @@ int command_nick(t_server *srv, Socket sock, char *cmd);
 int command_user(t_server *srv, Socket sock, char *cmd);
 int command_quit(t_server *srv, Socket sock, char *cmd);
 int command_join(t_server *srv, Socket sock, char *cmd);
-int command_part(t_server *srv, Socket sock, char *cmd);
+int command_part(t_server *srv, Socket s, char *cmd);
 int command_list(t_server *srv, Socket sock, char *cmd);
 int command_names(t_server *srv, Socket sock, char *cmd);
 int command_privmsg(t_server *srv, Socket sock, char *cmd);

@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:17:19 2017 brout_m
-** Last update Wed May 31 11:19:55 2017 brout_m
+** Last update Thu Jun  1 22:25:31 2017 brout_m
 */
 
 #ifndef TYPES_H_
@@ -15,6 +15,7 @@
 # include <stdbool.h>
 # include "circular_tools.h"
 
+# define ADDRESS_MAX_LENGTH 255
 # define NICKNAME_MAX_SIZE 10
 # define USERNAME_MAX_SIZE 513
 # define USER_MAX_CHAN 10
@@ -57,11 +58,12 @@ struct			s_client
   bool			connected;
   bool			quit;
   enum			e_rights right;
+  char			address[ADDRESS_MAX_LENGTH];
   char			nickname[NICKNAME_MAX_SIZE];
   char			username[USERNAME_MAX_SIZE];
   char			realname[MESSAGE_MAX_SIZE];
-  size_t		channel_count;
   int			channels[USER_MAX_CHAN];
+  size_t		channel_count;
   t_circular		r;
   t_circular		w;
 };

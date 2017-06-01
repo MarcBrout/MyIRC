@@ -9,6 +9,7 @@
 */
 #include <stdio.h>
 #include <string.h>
+#include "channels.h"
 #include "replies.h"
 
 char const	*replies[ERR_END];
@@ -30,6 +31,9 @@ int		already_in_channel(t_server *srv, Socket sock, int channel)
 
 static int	join_channel(t_server *srv, Socket sock, int channel)
 {
+  char out[MESSAGE_MAX_SIZE];
+
+  memset(out, 0, MESSAGE_MAX_SIZE);
   if (srv->channels[channel].clients_count == FD_MAX - 1)
     return (reply(srv, sock, "%s %s %s\r\n", "471",
                   srv->channels[channel].name, replies[ERR_CHANNELISFULL]));
@@ -40,6 +44,10 @@ static int	join_channel(t_server *srv, Socket sock, int channel)
   ++srv->channels[channel].clients_count;
   srv->clients[sock].channels[srv->clients[sock].channel_count] = channel + 1;
   ++srv->clients[sock].channel_count;
+  if (snprintf(out, MESSAGE_MAX_SIZE, "JOIN :%s",
+               srv->channels[channel].name) < 0 ||
+      send_to_channel(sock, srv, &srv->channels[channel], out))
+    return (1);
   if (strlen(srv->channels[channel].topic))
     return (reply(srv, sock, "%s %s :%s\r\n", "332",
                   srv->channels[channel].name, srv->channels[channel].topic));
@@ -57,8 +65,10 @@ static int	create_channel(t_server *srv, Socket sock, char const *name)
       ++index;
     }
   if (index == CHANNEL_MAX)
-    return (reply(srv, sock, "%s %s %s\r\n", "403", name,
+    return (reply(srv, sock, "403 %s %s\r\n", name,
                   replies[ERR_NOSUCHCHANNEL]));
+  if (name[0] != '&' && name[0] != '#')
+    return (reply(srv, sock, "476 %s :Bad channel name\r\n", name));
   strncpy(srv->channels[index].name, name, CHANNEL_NAME_SIZE);
   return (join_channel(srv, sock, index));
 }
@@ -70,7 +80,7 @@ int		find_channel(t_server *srv, char *chan)
   channel = 0;
   while (channel < CHANNEL_MAX)
     {
-      if (!strcmp(chan, srv->channels[channel].name))
+      if (!strcasecmp(chan, srv->channels[channel].name))
 	return (channel);
       ++channel;
     }

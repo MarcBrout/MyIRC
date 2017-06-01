@@ -9,6 +9,7 @@
 */
 #include <string.h>
 #include <stdio.h>
+#include "channels.h"
 #include "replies.h"
 
 char const	*replies[ERR_END];
@@ -26,24 +27,42 @@ static int	check_disponibility(t_server *srv, char *nick)
 
   while (channel < CHANNEL_MAX)
     {
-      if (!strcmp(nick, srv->channels[channel].name))
+      if (!strcasecmp(nick, srv->channels[channel].name))
 	return (0);
       ++channel;
     }
   while (client < FD_MAX)
     {
-      if (!strcmp(nick, srv->clients[client].nickname))
+      if (!strcasecmp(nick, srv->clients[client].nickname))
 	return (0);
       ++client;
     }
   return (1);
 }
 
+static int ending_nick_command(t_server *srv, Socket sock,
+                               char out[MESSAGE_MAX_SIZE])
+{
+  if (srv->clients[sock].channel_count &&
+      (snprintf(out, MESSAGE_MAX_SIZE, "NICK %s",
+                srv->clients[sock].nickname) < 0 ||
+       user_send_all_channel(sock, srv, out)))
+    return (1);
+  if (!strlen(srv->clients[sock].username))
+    return (0);
+  srv->clients[sock].connected = true;
+  return (reply(srv, sock, "001 %s %s!%s@%s\r\n", replies[RPL_WELCOME],
+                srv->clients[sock].nickname, srv->clients[sock].username,
+                srv->address));
+}
+
 int		command_nick(t_server *srv, Socket sock, char *cmd)
 {
+  char out[MESSAGE_MAX_SIZE];
   char		*line;
 
   strtok(cmd, " ");
+  memset(out, 0, MESSAGE_MAX_SIZE);
   line = strtok(NULL, " ");
   if (!line)
     return (reply(srv, sock, "431 %s\r\n", replies[ERR_NONICKNAMEGIVEN]));
@@ -54,10 +73,5 @@ int		command_nick(t_server *srv, Socket sock, char *cmd)
     return (reply(srv, sock, "433 %s %s\r\n", line,
                   replies[ERR_NICKNAMEINUSE]));
   strcat(srv->clients[sock].nickname, line);
-  if (!strlen(srv->clients[sock].username))
-    return (0);
-  srv->clients[sock].connected = true;
-  return (reply(srv, sock, "001 %s %s!%s@%s\r\n", replies[RPL_WELCOME],
-                srv->clients[sock].nickname, srv->clients[sock].username,
-                srv->address));
+  return (ending_nick_command(srv, sock, out));
 }

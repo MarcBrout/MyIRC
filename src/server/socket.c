@@ -31,6 +31,10 @@ int			accept_new_client(t_server *server)
   if (!strlen(server->address))
     strcat(server->address, inet_ntoa(addr.sin_addr));
   server->clients[sock].active = true;
+  len = sizeof(addr);
+  if (getpeername(sock, (sockaddr_t *)&addr, &len))
+    return (1);
+  strcat(server->clients[sock].address, inet_ntoa(addr.sin_addr));
   return (0);
 }
 

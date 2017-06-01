@@ -21,7 +21,7 @@ static int		is_channel(t_server *srv, char const *channel)
   i = 0;
   while (i < CHANNEL_MAX)
     {
-      if (!strcmp(channel, srv->channels[i].name))
+      if (!strcasecmp(channel, srv->channels[i].name))
       return (i);
       ++i;
     }
@@ -35,7 +35,7 @@ static int		is_client(t_server *srv, char const *client)
   i = 0;
   while (i < FD_MAX)
     {
-      if (!strcmp(client, srv->clients[i].nickname) ||
+      if (!strcasecmp(client, srv->clients[i].nickname) ||
 	  !strcmp(client, srv->clients[i].username))
 	return (i);
       ++i;
@@ -46,31 +46,39 @@ static int		is_client(t_server *srv, char const *client)
 static int		send_to_client(t_server *srv, int sender,
 				       int client, char *msg)
 {
-  if (reply(srv, client, ":%s :%s\r\n",
-	    srv->clients[sender].nickname, msg) < 0)
+  if (reply(srv, client, "%s!%s@%s %s\r\n",
+	    srv->clients[sender].nickname,
+            srv->clients[sender].username,
+            srv->clients[sender].address,
+            msg) < 0)
     return (1);
   return (0);
 }
 
 int			command_privmsg(t_server *srv, Socket sock, char *cmd)
 {
+  char out[MESSAGE_MAX_SIZE];
   char			*line;
   char			*target;
   char			*msg;
   int			channel;
 
   line = strtok(cmd, " ");
+  memset(out, 0, MESSAGE_MAX_SIZE);
   if (!(target = strtok(NULL, " ")))
     return (reply(srv, sock, "%s %s (%s)\r\n", "411",
                   replies[ERR_NORECIPIENT], line));
   if (!(msg = strtok(NULL, ":")))
     return (reply(srv, sock, "%s %s\r\n", "412", replies[ERR_NOTEXTTOSEND]));
+  if (snprintf(out, MESSAGE_MAX_SIZE, "PRIVMSG %s :%s",
+               target, msg) < 0)
+    return (1);
   if ((channel = is_channel(srv, target)) < 0)
     {
       if ((channel = is_client(srv, target)) < 0)
 	return (reply(srv, sock , "%s %s %s\r\n", "401", target,
 		      replies[ERR_NOSUCHNICK]));
-      return (send_to_client(srv, sock, channel, msg));
+      return (send_to_client(srv, sock, channel, out));
     }
-  return (send_to_channel(sock, srv, &srv->channels[channel], msg));
+  return (send_to_channel(sock, srv, &srv->channels[channel], out));
 }

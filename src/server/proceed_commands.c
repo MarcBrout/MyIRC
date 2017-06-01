@@ -108,7 +108,7 @@ static int		processing(t_server *srv,
   i = 0;
   while (commands[i].exec != NULL)
     {
-      if (!strncmp(commands[i].cmd, cmd, commands[i].len) &&
+      if (!strncasecmp(commands[i].cmd, cmd, commands[i].len) &&
 	  (cmd[commands[i].len] == ' ' || !cmd[commands[i].len]))
 	{
 	  if (commands[i].exec(srv, sock, cmd))

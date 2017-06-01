@@ -8,6 +8,7 @@
 ** Last update Wed May 31 11:32:37 2017 brout_m
 */
 #include <string.h>
+#include <stdio.h>
 #include "replies.h"
 #include "channels.h"
 
@@ -27,20 +28,20 @@ static void	parting_from_all_channel(t_server *srv, int sock)
 
 int		command_quit(t_server *srv, Socket sock, char *cmd)
 {
-  static char	*quit = "Quit";
+  char	         quit[MESSAGE_MAX_SIZE];
   char		*param;
 
   strtok(cmd, " ");
-  if (!(param = strtok(NULL, ":")))
-    {
-      if (user_send_all_channel(sock, srv, quit))
-	return (1);
-    }
-  else
-    {
-      if (user_send_all_channel(sock, srv, param))
-	return (1);
-    }
+  memset(quit, 0, MESSAGE_MAX_SIZE);
+  if ((param = strtok(NULL, ":")))
+  {
+    if ((snprintf(quit, MESSAGE_MAX_SIZE, "QUIT :Self-Quit: :%s", param) < 0))
+      return (1);
+  }
+  else if (snprintf(quit, MESSAGE_MAX_SIZE, "QUIT :Self-Quit:") < 0)
+    return (1);
+  if (user_send_all_channel(sock, srv, quit))
+    return (1);
   parting_from_all_channel(srv, sock);
   srv->clients[sock].quit = true;
   return (reply(srv, sock, "%s :%s\r\n", "ERROR", "Client quit"));
