@@ -12,6 +12,11 @@
 #include <stdbool.h>
 #include "types.h"
 
+bool            is_full(t_circular *c)
+{
+  return (c->len == BUFFER_MAX_SIZE - 1);
+}
+
 void		strncircular(t_circular *c, char *str, int n)
 {
   int		i;
@@ -19,19 +24,19 @@ void		strncircular(t_circular *c, char *str, int n)
 
   i = 0;
   cpos = c->pos + c->len;
-  while (i < n)
+  while (i < n && c->len < BUFFER_MAX_SIZE - 1)
     {
       c->buffer[cpos] = str[i];
       INCR(cpos);
       ++i;
       ++c->len;
     }
+  c->buffer[INCR(cpos)] = 0;
 }
 
 static bool	end(t_circular *c, int pos)
 {
-  return (c->buffer[pos] == '\r' &&
-          c->buffer[INCR(pos)] == '\n');
+  return (c->buffer[pos] == '\r' && c->buffer[INCR(pos)] == '\n');
 }
 
 bool		find_command(t_circular *c)

@@ -17,7 +17,7 @@ static int	add_to_list(t_server *srv, Socket sock,
 			    t_channel *channel)
 {
   if (!strlen(channel->topic))
-    return (reply(srv, sock, "322 %s :No topic set\r\n", channel->name));
+    return (reply(srv, sock, "322 %s\r\n", channel->name));
   return (reply(srv, sock, "322 %s :%s\r\n", channel->name, channel->topic));
 }
 
