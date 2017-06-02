@@ -5,13 +5,12 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:14:41 2017 brout_m
-** Last update Wed May 31 11:16:13 2017 brout_m
+** Last update Fri Jun  2 14:31:35 2017 brout_m
 */
-
 #ifndef REPLIES_H_
 # define REPLIES_H_
 
-#include "types.h"
+# include "types.h"
 
 enum			e_replies
   {

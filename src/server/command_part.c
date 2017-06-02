@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:28:25 2017 brout_m
-** Last update Wed May 31 11:29:07 2017 brout_m
+** Last update Fri Jun  2 14:35:08 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -44,13 +44,13 @@ int		command_part(t_server *srv, Socket s, char *cmd)
   memset(to_send, 0, MESSAGE_MAX_SIZE);
   message = strtok(NULL, " ");
   if (message)
-  {
-    if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s :\"%s\"",
-                           srv->channels[channel].name, message) < 0)
-      return (1);
-  }
+    {
+      if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s :\"%s\"",
+		   srv->channels[channel].name, message) < 0)
+	return (1);
+    }
   else if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s",
-           srv->channels[channel].name) < 0)
+		    srv->channels[channel].name) < 0)
     return (1);
   return (channel_part(srv, s, channel, to_send));
 }

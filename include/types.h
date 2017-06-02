@@ -5,9 +5,8 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:17:19 2017 brout_m
-** Last update Thu Jun  1 22:25:31 2017 brout_m
+** Last update Fri Jun  2 14:31:22 2017 brout_m
 */
-
 #ifndef TYPES_H_
 # define TYPES_H_
 

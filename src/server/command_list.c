@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:25:26 2017 brout_m
-** Last update Wed May 31 11:25:57 2017 brout_m
+** Last update Fri Jun  2 14:33:28 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -23,7 +23,7 @@ static int	add_to_list(t_server *srv, Socket sock,
 
 int		command_list(t_server *srv, Socket sock, char *cmd)
 {
-  size_t i = 0;
+  size_t	i = 0;
 
   (void)cmd;
   while (i < CHANNEL_MAX)

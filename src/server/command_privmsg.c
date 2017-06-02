@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:30:33 2017 brout_m
-** Last update Wed May 31 11:31:59 2017 brout_m
+** Last update Fri Jun  2 14:35:46 2017 brout_m
 */
 #include <string.h>
 #include <channels.h>
@@ -22,7 +22,7 @@ static int		is_channel(t_server *srv, char const *channel)
   while (i < CHANNEL_MAX)
     {
       if (!strcasecmp(channel, srv->channels[i].name))
-      return (i);
+	return (i);
       ++i;
     }
   return (-1);
@@ -57,7 +57,7 @@ static int		send_to_client(t_server *srv, int sender,
 
 int			command_privmsg(t_server *srv, Socket sock, char *cmd)
 {
-  char out[MESSAGE_MAX_SIZE];
+  char			out[MESSAGE_MAX_SIZE];
   char			*line;
   char			*target;
   char			*msg;

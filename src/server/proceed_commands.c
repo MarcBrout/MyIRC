@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:38:12 2017 brout_m
-** Last update Wed May 31 11:40:18 2017 brout_m
+** Last update Fri Jun  2 14:38:45 2017 brout_m
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,7 +78,7 @@ static t_command const	commands[42] =
 
 static void		remove_prefix(char cmd[MESSAGE_MAX_SIZE])
 {
-  int i;
+  int			i;
 
   if (cmd[0] == ':')
     {

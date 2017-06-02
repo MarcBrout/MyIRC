@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:23:10 2017 brout_m
-** Last update Wed May 31 11:25:20 2017 brout_m
+** Last update Fri Jun  2 14:33:13 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -16,7 +16,7 @@ char const	*replies[ERR_END];
 
 int		already_in_channel(t_server *srv, Socket sock, int channel)
 {
-  size_t i;
+  size_t	i;
 
   i = 0;
   while (i < srv->clients[sock].channel_count &&
@@ -31,7 +31,7 @@ int		already_in_channel(t_server *srv, Socket sock, int channel)
 
 static int	join_channel(t_server *srv, Socket sock, int channel)
 {
-  char out[MESSAGE_MAX_SIZE];
+  char		out[MESSAGE_MAX_SIZE];
 
   memset(out, 0, MESSAGE_MAX_SIZE);
   if (srv->channels[channel].clients_count == FD_MAX - 1)

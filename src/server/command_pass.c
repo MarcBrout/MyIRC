@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:29:14 2017 brout_m
-** Last update Wed May 31 11:30:24 2017 brout_m
+** Last update Fri Jun  2 14:38:46 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -46,3 +46,4 @@ int			command_pass(t_server *srv, Socket sock, char *cmd)
     return (reply(srv, sock, "%s %s\r\n", "464", replies[ERR_PASSWDMISMATCH]));
   return (0);
 }
+xs

@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:20:26 2017 brout_m
-** Last update Wed May 31 11:22:12 2017 brout_m
+** Last update Fri Jun  2 14:32:24 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -23,10 +23,10 @@ int		send_to_channel(Socket sender, t_server *srv,
       if (channel->clients[sock] != sender)
 	{
 	  if (reply(srv, channel->clients[sock], ":%s!%s@%s %s\r\n",
-		srv->clients[sender].nickname,
-                srv->clients[sender].username,
-                srv->clients[sender].address,
-		message))
+		    srv->clients[sender].nickname,
+		    srv->clients[sender].username,
+		    srv->clients[sender].address,
+		    message))
             return (1);
 	}
       ++sock;

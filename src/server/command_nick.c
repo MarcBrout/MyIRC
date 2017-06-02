@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:27:44 2017 brout_m
-** Last update Wed May 31 11:28:11 2017 brout_m
+** Last update Fri Jun  2 14:34:28 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -40,8 +40,8 @@ static int	check_disponibility(t_server *srv, char *nick)
   return (1);
 }
 
-static int ending_nick_command(t_server *srv, Socket sock,
-                               char out[MESSAGE_MAX_SIZE])
+static int	ending_nick_command(t_server *srv, Socket sock,
+				    char out[MESSAGE_MAX_SIZE])
 {
   if (srv->clients[sock].channel_count &&
       (snprintf(out, MESSAGE_MAX_SIZE, "NICK %s",
@@ -58,7 +58,7 @@ static int ending_nick_command(t_server *srv, Socket sock,
 
 int		command_nick(t_server *srv, Socket sock, char *cmd)
 {
-  char out[MESSAGE_MAX_SIZE];
+  char		out[MESSAGE_MAX_SIZE];
   char		*line;
 
   strtok(cmd, " ");
