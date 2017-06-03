@@ -46,7 +46,7 @@ static int		bind_and_listen(t_server *server, uint16_t port)
   addr.sin_port = htons(port);
   addr.sin_addr.s_addr = INADDR_ANY;
   if (bind(server->server_socket, (sockaddr_t const *)&addr, sizeof(addr)) < 0
-      || listen(server->server_socket, 50) < 0)
+      || listen(server->server_socket, 512) < 0)
     {
       perror("Server bind error");
       return (1);

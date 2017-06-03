@@ -18,7 +18,7 @@
 # define NICKNAME_MAX_SIZE 10
 # define USERNAME_MAX_SIZE 513
 # define USER_MAX_CHAN 10
-# define FD_MAX 255
+# define FD_MAX 512
 # define CHANNEL_MAX 51
 # define CHANNEL_NAME_SIZE 201
 # define IS_CBUFF_FULL(n) ((n).len > 0)
