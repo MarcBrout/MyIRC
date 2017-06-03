@@ -45,12 +45,10 @@ static int		send_client(t_client *client, Socket sock)
   char			out[MESSAGE_MAX_SIZE];
 
   memset(out, 0, MESSAGE_MAX_SIZE);
-  while (strfromcircular(&client->w, out) ||
-         (strlen(out) && !strncmp("322", out, 3)) || //TODO : check this !
-         client->w.remains)
+  while (strfromcircular(&client->w, out))
   {
     len = strlen(out);
-    if (write_out(client, sock, out, len && !strncmp("322", out, 3))) // TODO chek this
+    if (write_out(client, sock, out, len > 0))
       return (1);
     memset(out, 0, MESSAGE_MAX_SIZE);
   }

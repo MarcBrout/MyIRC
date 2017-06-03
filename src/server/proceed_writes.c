@@ -50,8 +50,7 @@ static int		send_client(t_client *client, Socket sock)
 
   memset(out, 0, MESSAGE_MAX_SIZE);
   while (strfromcircular(&client->w, out) ||
-         (strlen(out) && !strncmp("322", out, 3)) ||
-          client->w.remains)
+         (strlen(out) && !strncmp("322", out, 3)))
     {
       len = strlen(out);
       if (write_out(client, sock, out, len && !strncmp("322", out, 3)))
