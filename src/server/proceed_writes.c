@@ -26,13 +26,13 @@ static int		write_out(t_client *client, Socket sock,
       out[len] = '\r';
       out[len + 1] = '\n';
     }
-  if ((written = write(sock, out, len + 2)) < 0)
+  if (write(sock, out, strlen(out)) < 0)
     {
       perror("Write to client error");
       return (1);
     }
-  notwritten = (len + 2) - written;
-  if (notwritten > 0)
+  notwritten = (len + 1) - written;
+  if (notwritten)
   {
     client->w.remains = true;
     client->w.pos -= notwritten > client->w.pos ?
