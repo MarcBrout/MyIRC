@@ -1,4 +1,3 @@
-
 /*
 ** proceed_writes.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
 **
@@ -6,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:58:46 2017 brout_m
-** Last update Sat Jun  3 16:47:42 2017 brout_m
+** Last update Sat Jun  3 16:57:10 2017 brout_m
 */
 #include <sys/socket.h>
 #include <stdio.h>
