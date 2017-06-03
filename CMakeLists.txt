@@ -36,6 +36,6 @@ set(MYIRC
         src/server/command_names.c
         src/server/command_user.c
         src/server/proceed_writes.c
-        src/com/main.c src/com/get_select.c include/client.h src/com/proceed_client_commands.c)
+        src/com/connect_to_server.c src/com/get_select.c include/client.h src/com/proceed_client_commands.c)
 
 add_executable(myirc ${MYIRC})

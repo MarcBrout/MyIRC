@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:22:18 2017 brout_m
-** Last update Wed May 31 11:23:04 2017 brout_m
+** Last update Sat Jun  3 16:43:23 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -56,10 +56,10 @@ bool		find_command(t_circular *c)
   while (i < c->len)
     {
       if (end(c, pos))
-      {
-        c->remains = state;
-        return (true);
-      }
+	{
+	  c->remains = state;
+	  return (true);
+	}
       ++i;
       INCR(pos);
     }

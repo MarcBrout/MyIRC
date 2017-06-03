@@ -1,3 +1,4 @@
+
 /*
 ** proceed_writes.c for myirc in /home/brout_m/rendu/system/PSU_2016_myirc
 **
@@ -5,7 +6,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:58:46 2017 brout_m
-** Last update Wed May 31 11:59:43 2017 brout_m
+** Last update Sat Jun  3 16:47:42 2017 brout_m
 */
 #include <sys/socket.h>
 #include <stdio.h>
@@ -17,8 +18,8 @@ static int		write_out(t_client *client, Socket sock,
 				  char out[MESSAGE_MAX_SIZE], bool cond)
 {
   size_t		len;
-  ssize_t written;
-  ssize_t notwritten;
+  ssize_t		written;
+  ssize_t		notwritten;
 
   len = strlen(out);
   if (cond)
@@ -26,20 +27,20 @@ static int		write_out(t_client *client, Socket sock,
       out[len] = '\r';
       out[len + 1] = '\n';
     }
-  if (write(sock, out, strlen(out)) < 0)
+  if ((written = write(sock, out, len + 2)) < 0)
     {
       perror("Write to client error");
       return (1);
     }
-  notwritten = (len + 1) - written;
+  notwritten = (len + 2) - written;
   if (notwritten)
-  {
-    client->w.remains = true;
-    client->w.pos -= notwritten > client->w.pos ?
-                     BUFFER_MAX_SIZE - (notwritten - client->w.pos) :
-                     client->w.pos - notwritten;
-    client->w.len += notwritten;
-  }
+    {
+      client->w.remains = true;
+      client->w.pos -= notwritten > client->w.pos ?
+	BUFFER_MAX_SIZE - (notwritten - client->w.pos) :
+	client->w.pos - notwritten;
+      client->w.len += notwritten;
+    }
   return (0);
 }
 
