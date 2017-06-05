@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:22:18 2017 brout_m
-** Last update Wed May 31 11:23:04 2017 brout_m
+** Last update Sat Jun  3 16:43:23 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -36,23 +36,34 @@ void		strncircular(t_circular *c, char *str, int n)
 
 static bool	end(t_circular *c, int pos)
 {
+  if (c->remains)
+  {
+    c->remains = false;
+    return (false);
+  }
   return (c->buffer[pos] == '\r' && c->buffer[INCR(pos)] == '\n');
 }
 
 bool		find_command(t_circular *c)
 {
+  bool          state;
   int		pos;
   int		i;
 
   i = 0;
   pos = c->pos;
+  state = c->remains;
   while (i < c->len)
     {
       if (end(c, pos))
-	return (true);
+	{
+	  c->remains = state;
+	  return (true);
+	}
       ++i;
       INCR(pos);
     }
+  c->remains = state;
   return (false);
 }
 

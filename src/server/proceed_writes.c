@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:58:46 2017 brout_m
-** Last update Wed May 31 11:59:43 2017 brout_m
+** Last update Sat Jun  3 16:57:10 2017 brout_m
 */
 #include <sys/socket.h>
 #include <stdio.h>
@@ -13,10 +13,12 @@
 #include <string.h>
 #include "types.h"
 
-static int		write_out(Socket sock,
+static int		write_out(t_client *client, Socket sock,
 				  char out[MESSAGE_MAX_SIZE], bool cond)
 {
   size_t		len;
+  ssize_t		written;
+  ssize_t		notwritten;
 
   len = strlen(out);
   if (cond)
@@ -24,10 +26,19 @@ static int		write_out(Socket sock,
       out[len] = '\r';
       out[len + 1] = '\n';
     }
-  if (write(sock, out, strlen(out)) < 0)
+  if ((written = write(sock, out, len + 2)) < 0)
     {
       perror("Write to client error");
       return (1);
+    }
+  notwritten = (len + 2) - written;
+  if (notwritten)
+    {
+      client->w.remains = true;
+      client->w.pos -= notwritten > client->w.pos ?
+	BUFFER_MAX_SIZE - (notwritten - client->w.pos) :
+	client->w.pos - notwritten;
+      client->w.len += notwritten;
     }
   return (0);
 }
@@ -42,11 +53,11 @@ static int		send_client(t_client *client, Socket sock)
          (strlen(out) && !strncmp("322", out, 3)))
     {
       len = strlen(out);
-      if (write_out(sock, out, len && !strncmp("322", out, 3)))
+      if (write_out(client, sock, out, len && !strncmp("322", out, 3)))
 	return (1);
       memset(out, 0, MESSAGE_MAX_SIZE);
     }
-  return (write_out(sock, out, strlen(out) > 0));
+  return (write_out(client, sock, out, strlen(out) > 0));
 }
 
 static int		write_client(t_client *client, Socket sock)

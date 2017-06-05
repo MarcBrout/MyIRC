@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:38:12 2017 brout_m
-** Last update Fri Jun  2 14:38:45 2017 brout_m
+** Last update Sat Jun  3 16:45:33 2017 brout_m
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -110,16 +110,10 @@ static int		processing(t_server *srv,
     {
       if (!strncasecmp(commands[i].cmd, cmd, commands[i].len) &&
 	  (cmd[commands[i].len] == ' ' || !cmd[commands[i].len]))
-	{
-	  if (commands[i].exec(srv, sock, cmd))
-	    return (1);
-	  break;
-	}
+	return (commands[i].exec(srv, sock, cmd));
       ++i;
     }
-  if (commands[i].exec == NULL && unsupported_cmd(srv, sock, cmd))
-    return (1);
-  return (0);
+  return (unsupported_cmd(srv, sock, cmd));
 }
 
 int			proceed_commands(t_server *srv)

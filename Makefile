@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Wed May 31 12:01:24 2017 brout_m
+## Last update Sat Jun  3 16:48:07 2017 brout_m
 ##
 
 SERVER=		server
@@ -40,7 +40,7 @@ INC=		-I./include
 
 CC=		gcc
 
-CFLAGS=		-W -Wall -Werror -Ofast $(INC)
+CFLAGS=		-W -Wall -Werror $(INC)
 
 ifeq ($(DEBUG),yes)
 CFLAGS+=	-g3
@@ -59,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re client
