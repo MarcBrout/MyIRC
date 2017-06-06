@@ -46,7 +46,7 @@ static int		is_client(t_server *srv, char const *client)
 static int		send_to_client(t_server *srv, int sender,
 				       int client, char *msg)
 {
-  if (reply(srv, client, "%s!%s@%s %s\r\n",
+  if (reply(srv, client, ":%s!%s@%s %s\r\n",
 	    srv->clients[sender].nickname,
             srv->clients[sender].username,
             srv->clients[sender].address,

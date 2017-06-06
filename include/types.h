@@ -17,6 +17,7 @@
 # define ADDRESS_MAX_LENGTH 255
 # define NICKNAME_MAX_SIZE 10
 # define USERNAME_MAX_SIZE 513
+# define PASSWORD_MAX_SIZE 15
 # define USER_MAX_CHAN 10
 # define FD_MAX 512
 # define CHANNEL_MAX 51
@@ -56,11 +57,13 @@ struct			s_client
   bool			active;
   bool			connected;
   bool			quit;
+  bool                  sendName;
   enum			e_rights right;
   char			address[ADDRESS_MAX_LENGTH];
   char			nickname[NICKNAME_MAX_SIZE];
   char			username[USERNAME_MAX_SIZE];
   char			realname[MESSAGE_MAX_SIZE];
+  char			password[PASSWORD_MAX_SIZE];
   int			channels[USER_MAX_CHAN];
   size_t		channel_count;
   t_circular		r;

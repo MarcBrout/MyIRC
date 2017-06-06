@@ -17,7 +17,7 @@ bool            is_full(t_circular *c)
   return (c->len == BUFFER_MAX_SIZE - 1);
 }
 
-void		strncircular(t_circular *c, char *str, int n)
+void		strncircular(t_circular *c, const char *str, int n)
 {
   int		i;
   int		cpos;

@@ -27,7 +27,7 @@ struct			s_circular
   char			buffer[BUFFER_MAX_SIZE];
 };
 
-void strncircular(t_circular *read_cir, char *str, int n);
+void strncircular(t_circular *read_cir, const char *str, int n);
 bool find_command(t_circular *cir);
 bool strfromcircular(t_circular *cir, char out[MESSAGE_MAX_SIZE]);
 

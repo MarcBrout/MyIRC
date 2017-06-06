@@ -13,16 +13,8 @@
 # include <stdint.h>
 # include "types.h"
 
-typedef struct s_client_command		t_client_command;
 typedef struct s_client_data		t_client_data;
-typedef int				(*exec_t)(t_client_data *);
 
-struct					s_client_command
-{
-  const char				*cmd;
-  const int				len;
-  const exec_t				exec;
-};
 
 struct					s_client_data
 {
@@ -32,8 +24,8 @@ struct					s_client_data
   char					prefix[MESSAGE_MAX_SIZE];
 };
 
-int connect_to_server(t_client_data *data, char *address, uint16_t port);
-int get_select(t_client_data *data);
-int proceed_client_commands(t_client_data *data);
-
+int     connect_to_server(t_client_data *data, const char *address, uint16_t port);
+int     get_select(t_client_data *data);
+void	remove_prefix(char cmd[MESSAGE_MAX_SIZE],
+                      char prefix[MESSAGE_MAX_SIZE]);
 #endif /* !CLIENT_H_ */

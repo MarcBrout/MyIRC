@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:33:27 2017 brout_m
-** Last update Sat Jun  3 16:39:16 2017 brout_m
+** Last update Tue Jun  6 13:37:00 2017 duhieu_b
 */
 #include <stdio.h>
 #include <sys/socket.h>
@@ -14,7 +14,7 @@
 #include "client.h"
 
 int			connect_to_server(t_client_data *data,
-					  char *address, uint16_t port)
+					  const char *address, uint16_t port)
 {
   Socket		sock;
   sockaddr_in_t		add;
@@ -35,22 +35,4 @@ int			connect_to_server(t_client_data *data,
     }
   data->sock = sock;
   return (0);
-}
-
-/* MAIN EXAMPLE
-int main(int ac, char **av)
-{
-  uint16_t port = atoi(av[2]);
-  t_client_data client;
-
-  memset(&client, 0, sizeof(t_client_data));
-  if (connect_to_server(&client, av[1], port))
-    return (1);
-  while (1)
-  {
-    if (get_select(&client))
-      return (1);
-    if (proceed_client_commands(&client))
-      return (1);
-  }
 }
