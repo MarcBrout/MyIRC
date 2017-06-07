@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 #include "client.h"
 
-int			connect_to_server(t_client_data *data,
+extern "C" int		connect_to_server(t_client_data *data,
 					  const char *address, uint16_t port)
 {
   Socket		sock;

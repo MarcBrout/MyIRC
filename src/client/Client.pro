@@ -8,13 +8,19 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Client
+TARGET = ../../client
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+mainwindow.cpp\
+../com/connect_to_server.c\
+../com/proceed_client_commands.c\
+../com/get_select.c\
+../server/circular_buffer.c
 
-HEADERS  += mainwindow.h
+HEADERS  += ../../include/mainwindow.h\
+../../include/circular_tools.h\
+../../include/client.h
 
 FORMS    += mainwindow.ui

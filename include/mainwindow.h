@@ -5,14 +5,14 @@
 ** Login   <benjamin.duhieu@epitech.eu>
 **
 ** Started on  Tue Jun  6 15:58:28 2017 duhieu_b
-** Last update Tue Jun  6 16:40:14 2017 duhieu_b
+** Last update Wed Jun  7 01:05:24 2017 brout_m
 */
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
-#include <QTimer>
+#include <QtCore/QTimer>
 #include "client.h"
 
 namespace Ui {
@@ -25,7 +25,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit                    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    virtual			~MainWindow();
 
     void                        getJoin();
     void                        getUser();

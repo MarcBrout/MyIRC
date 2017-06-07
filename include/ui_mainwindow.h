@@ -10,7 +10,6 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QColumnView>
@@ -27,6 +26,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QAction>
 
 QT_BEGIN_NAMESPACE
 
@@ -149,7 +149,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MyIRC", 0));
+      MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MyIRC", 0));
         subwindow->setWindowTitle(QApplication::translate("MainWindow", "Subwindow", 0));
         label->setText(QApplication::translate("MainWindow", "Enter Your Name:", 0));
         label_2->setText(QApplication::translate("MainWindow", "Password:", 0));
