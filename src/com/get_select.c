@@ -99,16 +99,23 @@ static int		read_client(t_client *client, Socket sock)
   return (0);
 }
 
-int			get_select(t_client_data *data)
+extern "C" int		get_select(t_client_data *data)
 {
+  struct timeval        tim;
   fd_set		reads;
   fd_set		writes;
+  int retval;
 
   FD_ZERO(&reads);
   FD_ZERO(&writes);
   FD_SET(data->sock, &reads);
+  tim.tv_usec = 100;
+  tim.tv_sec = 0;
   if (find_command(&data->client.w))
     FD_SET(data->sock, &writes);
+  retval = select(data->sock + 1, &reads, &writes, NULL, &tim);
+  if (retval < 0)
+    return (1);
   if ((FD_ISSET(data->sock, &writes) &&
        write_client(&data->client, data->sock)) ||
       (FD_ISSET(data->sock, &reads) &&

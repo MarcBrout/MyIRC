@@ -11,7 +11,7 @@
 #include "client.h"
 #include "proceed.h"
 
-void		remove_prefix(char cmd[MESSAGE_MAX_SIZE],
+extern "C" void		remove_prefix(char cmd[MESSAGE_MAX_SIZE],
 			      char prefix[MESSAGE_MAX_SIZE])
 {
   int			i;

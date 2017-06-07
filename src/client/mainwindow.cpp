@@ -5,10 +5,10 @@
 // Login   <benjamin.duhieu@epitech.eu>
 //
 // Started on  Tue Jun  6 15:57:26 2017 duhieu_b
-// Last update Tue Jun  6 15:57:32 2017 duhieu_b
+// Last update Wed Jun  7 09:52:19 2017 brout_m
 //
 
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <iostream>
 #include <sstream>
 #include <cstring>
@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(&m_time, &QTimer::timeout, this, &MainWindow::sendMessage);
     memset(&m_client, 0, sizeof(t_client_data));
-    m_time.start(1);
+    m_time.start(100);
 }
 
 MainWindow::~MainWindow()
@@ -222,10 +222,10 @@ void MainWindow::connectServer()
 
 void MainWindow::sendMessage()
 {
-    m_time.start(1);
     get_select(&m_client);
     proceedClientCommands();
     writeOnBuffer();
+    m_time.start(100);
 }
 
 void MainWindow::proceedClientCommands()

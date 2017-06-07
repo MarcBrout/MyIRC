@@ -12,74 +12,68 @@
 #include <stdbool.h>
 #include "types.h"
 
-bool            is_full(t_circular *c)
-{
+#ifdef __plusplus
+extern "C" {
+#endif
+
+bool is_full(t_circular *c) {
   return (c->len == BUFFER_MAX_SIZE - 1);
 }
 
-void		strncircular(t_circular *c, const char *str, int n)
-{
-  int		i;
-  int		cpos;
+void strncircular(t_circular *c, const char *str, int n) {
+  int i;
+  int cpos;
 
   i = 0;
   cpos = c->pos + c->len;
-  while (i < n && c->len < BUFFER_MAX_SIZE - 1)
-    {
-      c->buffer[cpos] = str[i];
-      INCR(cpos);
-      ++i;
-      ++c->len;
-    }
+  while (i < n && c->len < BUFFER_MAX_SIZE - 1) {
+    c->buffer[cpos] = str[i];
+    INCR(cpos);
+    ++i;
+    ++c->len;
+  }
   c->buffer[INCR(cpos)] = 0;
 }
 
-static bool	end(t_circular *c, int pos)
-{
-  if (c->remains)
-  {
+static bool end(t_circular *c, int pos) {
+  if (c->remains) {
     c->remains = false;
     return (false);
   }
   return (c->buffer[pos] == '\r' && c->buffer[INCR(pos)] == '\n');
 }
 
-bool		find_command(t_circular *c)
-{
-  bool          state;
-  int		pos;
-  int		i;
+bool find_command(t_circular *c) {
+  bool state;
+  int pos;
+  int i;
 
   i = 0;
   pos = c->pos;
   state = c->remains;
-  while (i < c->len)
-    {
-      if (end(c, pos))
-	{
-	  c->remains = state;
-	  return (true);
-	}
-      ++i;
-      INCR(pos);
+  while (i < c->len) {
+    if (end(c, pos)) {
+      c->remains = state;
+      return (true);
     }
+    ++i;
+    INCR(pos);
+  }
   c->remains = state;
   return (false);
 }
 
-bool		strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
-{
-  int		i;
+bool strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE]) {
+  int i;
 
   i = 0;
   memset(out, 0, MESSAGE_MAX_SIZE);
-  while (!end(c, c->pos) && i < MESSAGE_MAX_SIZE - 1)
-    {
-      out[i] = c->buffer[c->pos];
-      INCR(c->pos);
-      ++i;
-      --c->len;
-    }
+  while (!end(c, c->pos) && i < MESSAGE_MAX_SIZE - 1) {
+    out[i] = c->buffer[c->pos];
+    INCR(c->pos);
+    ++i;
+    --c->len;
+  }
   out[i] = 0;
   if (!end(c, c->pos))
     return (true);
@@ -88,3 +82,7 @@ bool		strfromcircular(t_circular *c, char out[MESSAGE_MAX_SIZE])
   c->len -= 2;
   return (false);
 }
+
+#ifdef __plusplus
+}
+#endif

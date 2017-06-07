@@ -8,6 +8,10 @@
 ** Last update Wed May 31 11:13:50 2017 brout_m
 */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef CIRCULAR_TOOLS_H_
 # define CIRCULAR_TOOLS_H_
 
@@ -31,4 +35,8 @@ void strncircular(t_circular *read_cir, const char *str, int n);
 bool find_command(t_circular *cir);
 bool strfromcircular(t_circular *cir, char out[MESSAGE_MAX_SIZE]);
 
-#endif /* !MYIRC_CIRCULAR_TOOLS_H_ */
+ #endif /* !CIRCULAR_TOOLS_H_ */
+
+#ifdef __cplusplus
+}
+#endif
