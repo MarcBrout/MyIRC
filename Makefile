@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Tue Jun  6 12:05:49 2017 duhieu_b
+## Last update Wed Jun  7 10:17:33 2017 brout_m
 ##
 
 SERVER=		server
@@ -49,10 +49,14 @@ endif
 $(SERVER): $(SERVER_OBJ)
 	$(CC) -o $(SERVER) $(SERVER_OBJ) $(INC)
 
-all: $(SERVER)
+client:
+	$(MAKE) -C ./src/client
+
+all: $(SERVER) client
 
 clean:
 	rm -f $(SERVER_OBJ)
+	$(MAKE) -C ./src/client clean
 
 fclean: clean
 	rm -f $(SERVER)
