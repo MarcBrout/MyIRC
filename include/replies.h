@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:14:41 2017 brout_m
-** Last update Fri Jun  2 14:31:35 2017 brout_m
+** Last update Wed Jun  7 10:59:09 2017 brout_m
 */
 #ifndef REPLIES_H_
 # define REPLIES_H_
@@ -64,7 +64,9 @@ enum			e_replies
   };
 
 extern char const	*replies[ERR_END];
-int needmoreparams(t_server *srv, Socket sock, char *line);
-int reply(t_server *srv, Socket sock, char *const fmt, ...);
+int			needmoreparams(t_server *srv,
+				       Socket sock, char *line);
+int			reply(t_server *srv,
+			      Socket sock, char *const fmt, ...);
 
 #endif /* !REPLIES_H_ */
