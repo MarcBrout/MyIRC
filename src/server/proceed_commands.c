@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:38:12 2017 brout_m
-** Last update Sat Jun  3 16:45:33 2017 brout_m
+** Last update Wed Jun  7 11:18:56 2017 brout_m
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -100,6 +100,11 @@ static void		remove_prefix(char cmd[MESSAGE_MAX_SIZE])
     }
 }
 
+static int		notconnected(t_server *srv, Socket sock)
+{
+  return (reply(srv, sock, "451 %s\r\n", replies[ERR_NOTREGISTERED]));
+}
+
 static int		processing(t_server *srv,
 				   Socket sock, char cmd[MESSAGE_MAX_SIZE])
 {
@@ -110,7 +115,12 @@ static int		processing(t_server *srv,
     {
       if (!strncasecmp(commands[i].cmd, cmd, commands[i].len) &&
 	  (cmd[commands[i].len] == ' ' || !cmd[commands[i].len]))
-	return (commands[i].exec(srv, sock, cmd));
+	{
+	  if (!srv->clients[sock].connected &&
+	      i != 1 && i != 2 && i != 5)
+	    return (notconnected(srv, sock));
+	  return (commands[i].exec(srv, sock, cmd));
+	}
       ++i;
     }
   return (unsupported_cmd(srv, sock, cmd));
