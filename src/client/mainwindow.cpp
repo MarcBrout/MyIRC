@@ -5,7 +5,7 @@
 // Login   <benjamin.duhieu@epitech.eu>
 //
 // Started on  Tue Jun  6 15:57:26 2017 duhieu_b
-// Last update Wed Jun  7 09:52:19 2017 brout_m
+// Last update Wed Jun  7 10:50:59 2017 brout_m
 //
 
 #include <QtWidgets/QWidget>
@@ -14,7 +14,7 @@
 #include <cstring>
 #include <map>
 #include <sys/socket.h>
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 #include "circular_tools.h"
 #include "client.h"

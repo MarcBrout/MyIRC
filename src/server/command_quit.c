@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:32:07 2017 brout_m
-** Last update Wed May 31 11:32:37 2017 brout_m
+** Last update Wed Jun  7 10:40:48 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -28,16 +28,17 @@ static void	parting_from_all_channel(t_server *srv, int sock)
 
 int		command_quit(t_server *srv, Socket sock, char *cmd)
 {
-  char	         quit[MESSAGE_MAX_SIZE];
+  char		quit[MESSAGE_MAX_SIZE];
   char		*param;
 
   strtok(cmd, " ");
   memset(quit, 0, MESSAGE_MAX_SIZE);
   if ((param = strtok(NULL, ":")))
-  {
-    if ((snprintf(quit, MESSAGE_MAX_SIZE, "QUIT :Self-Quit: :%s", param) < 0))
-      return (1);
-  }
+    {
+      if ((snprintf(quit, MESSAGE_MAX_SIZE,
+		    "QUIT :Self-Quit: :%s", param) < 0))
+	return (1);
+    }
   else if (snprintf(quit, MESSAGE_MAX_SIZE, "QUIT :Self-Quit:") < 0)
     return (1);
   if (user_send_all_channel(sock, srv, quit))

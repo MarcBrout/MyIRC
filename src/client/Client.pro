@@ -19,7 +19,7 @@ mainwindow.cpp\
 ../com/get_select.c\
 ../server/circular_buffer.c
 
-HEADERS  += ../../include/mainwindow.h\
+HEADERS  += ../../include/mainwindow.hpp\
 ../../include/circular_tools.h\
 ../../include/client.h
 

@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:43:50 2017 brout_m
-** Last update Wed May 31 11:44:53 2017 brout_m
+** Last update Wed Jun  7 10:43:49 2017 brout_m
 */
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -17,7 +17,7 @@
 
 int			accept_new_client(t_server *server)
 {
-  sockaddr_in_t		addr;
+  sockaddr_in_t	addr;
   socklen_t		len;
   int			sock;
 
@@ -40,7 +40,7 @@ int			accept_new_client(t_server *server)
 
 static int		bind_and_listen(t_server *server, uint16_t port)
 {
-  sockaddr_in_t		addr;
+  sockaddr_in_t	addr;
 
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);

@@ -117,7 +117,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		Client.pro ../../include/mainwindow.h \
+		Client.pro ../../include/mainwindow.hpp \
 		../../include/circular_tools.h \
 		../../include/client.h main.cpp \
 		mainwindow.cpp \
@@ -291,7 +291,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../include/mainwindow.h ../../include/circular_tools.h ../../include/client.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../include/mainwindow.hpp ../../include/circular_tools.h ../../include/client.h $(DISTDIR)/
 	$(COPY_FILE) --parents main.cpp mainwindow.cpp ../com/connect_to_server.c ../com/proceed_client_commands.c ../com/get_select.c ../server/circular_buffer.c $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
@@ -300,7 +300,6 @@ clean: compiler_clean
 	-$(DEL_FILE) $(OBJECTS)
 	-$(DEL_FILE) *~ core *.core
 	-$(DEL_FILE) ../../client
-
 
 distclean: clean
 	-$(DEL_FILE) $(TARGET)
@@ -323,8 +322,8 @@ compiler_moc_header_clean:
 moc_mainwindow.cpp: ../../include/client.h \
 		../../include/types.h \
 		../../include/circular_tools.h \
-		../../include/mainwindow.h
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/brout_m/rendu/system/PSU_2016_myirc/src/client -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/mainwindow.h -o moc_mainwindow.cpp
+		../../include/mainwindow.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/brout_m/rendu/system/PSU_2016_myirc/src/client -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/mainwindow.hpp -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:

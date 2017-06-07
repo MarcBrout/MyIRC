@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:28:25 2017 brout_m
-** Last update Fri Jun  2 14:35:08 2017 brout_m
+** Last update Wed Jun  7 10:39:11 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +28,7 @@ static int	channel_part(t_server *srv, Socket sock,
 
 int		command_part(t_server *srv, Socket s, char *cmd)
 {
-  char          to_send[MESSAGE_MAX_SIZE];
+  char		to_send[MESSAGE_MAX_SIZE];
   char		*message;
   char		*line;
   char		*name;
