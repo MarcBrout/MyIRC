@@ -13,6 +13,7 @@
 
 # include "types.h"
 
+int send_to_client(t_server *srv, int sen, int client, char *msg);
 int find_channel(t_server *srv, char *chan);
 int already_in_channel(t_server *srv, Socket sock, int channel);
 int command_pass(t_server *srv, Socket sock, char *cmd);

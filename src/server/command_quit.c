@@ -21,7 +21,7 @@ static void	parting_from_all_channel(t_server *srv, int sock)
   client = &srv->clients[sock];
   while (i < client->channel_count)
     {
-      parting_from_channel(srv, sock, client->channels[i]);
+      parting_from_channel(srv, sock, client->channels[i] - 1);
       ++i;
     }
 }

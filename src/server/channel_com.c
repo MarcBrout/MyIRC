@@ -39,6 +39,7 @@ static int	find_pos(int *tab, int find, size_t size)
   size_t	i;
 
   i = 0;
+  printf("SIZE = %lu\n", size);
   while (i < size)
     {
       if (tab[i] == find)
