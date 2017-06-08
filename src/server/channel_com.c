@@ -20,15 +20,12 @@ int		send_to_channel(Socket sender, t_server *srv,
   sock = 0;
   while (sock < (int)channel->clients_count)
     {
-      if (channel->clients[sock] != sender)
-	{
 	  if (reply(srv, channel->clients[sock], ":%s!%s@%s %s\r\n",
 		    srv->clients[sender].nickname,
 		    srv->clients[sender].username,
 		    srv->clients[sender].address,
 		    message))
             return (1);
-	}
       ++sock;
     }
   return (0);

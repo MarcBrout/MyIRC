@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = client1.0.0
-DISTDIR = /home/brout_m/rendu/system/PSU_2016_myirc/src/client/.tmp/client1.0.0
+DISTDIR = /home/brout_m/rendu/system/PSU_2016_myirc/bonus/client/.tmp/client1.0.0
 LINK          = g++
 LFLAGS        = -m64 -Wl,-O1
 LIBS          = $(SUBLIBS) -L/usr/X11R6/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread
@@ -50,10 +50,10 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		mainwindow.cpp \
-		../com/connect_to_server.c \
-		../com/proceed_client_commands.c \
-		../com/get_select.c \
-		../server/circular_buffer.c moc_mainwindow.cpp
+		../../src/com/connect_to_server.c \
+		../../src/com/proceed_client_commands.c \
+		../../src/com/get_select.c \
+		../../src/server/circular_buffer.c moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		connect_to_server.o \
@@ -121,10 +121,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../../include/circular_tools.h \
 		../../include/client.h main.cpp \
 		mainwindow.cpp \
-		../com/connect_to_server.c \
-		../com/proceed_client_commands.c \
-		../com/get_select.c \
-		../server/circular_buffer.c
+		../../src/com/connect_to_server.c \
+		../../src/com/proceed_client_commands.c \
+		../../src/com/get_select.c \
+		../../src/server/circular_buffer.c
 QMAKE_TARGET  = client
 DESTDIR       = ../../#avoid trailing-slash linebreak
 TARGET        = ../../client
@@ -292,7 +292,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../include/mainwindow.hpp ../../include/circular_tools.h ../../include/client.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp ../com/connect_to_server.c ../com/proceed_client_commands.c ../com/get_select.c ../server/circular_buffer.c $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp ../../src/com/connect_to_server.c ../../src/com/proceed_client_commands.c ../../src/com/get_select.c ../../src/server/circular_buffer.c $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -323,7 +323,7 @@ moc_mainwindow.cpp: ../../include/client.h \
 		../../include/types.h \
 		../../include/circular_tools.h \
 		../../include/mainwindow.hpp
-	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/brout_m/rendu/system/PSU_2016_myirc/src/client -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/mainwindow.hpp -o moc_mainwindow.cpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/brout_m/rendu/system/PSU_2016_myirc/bonus/client -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../../include/mainwindow.hpp -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -349,17 +349,17 @@ main.o: main.cpp
 mainwindow.o: mainwindow.cpp ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
-connect_to_server.o: ../com/connect_to_server.c
-	$(CC) -c $(CFLAGS) $(INCPATH) -o connect_to_server.o ../com/connect_to_server.c
+connect_to_server.o: ../../src/com/connect_to_server.c
+	$(CC) -c $(CFLAGS) $(INCPATH) -o connect_to_server.o ../../src/com/connect_to_server.c
 
-proceed_client_commands.o: ../com/proceed_client_commands.c
-	$(CC) -c $(CFLAGS) $(INCPATH) -o proceed_client_commands.o ../com/proceed_client_commands.c
+proceed_client_commands.o: ../../src/com/proceed_client_commands.c
+	$(CC) -c $(CFLAGS) $(INCPATH) -o proceed_client_commands.o ../../src/com/proceed_client_commands.c
 
-get_select.o: ../com/get_select.c
-	$(CC) -c $(CFLAGS) $(INCPATH) -o get_select.o ../com/get_select.c
+get_select.o: ../../src/com/get_select.c
+	$(CC) -c $(CFLAGS) $(INCPATH) -o get_select.o ../../src/com/get_select.c
 
-circular_buffer.o: ../server/circular_buffer.c
-	$(CC) -c $(CFLAGS) $(INCPATH) -o circular_buffer.o ../server/circular_buffer.c
+circular_buffer.o: ../../src/server/circular_buffer.c
+	$(CC) -c $(CFLAGS) $(INCPATH) -o circular_buffer.o ../../src/server/circular_buffer.c
 
 moc_mainwindow.o: moc_mainwindow.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

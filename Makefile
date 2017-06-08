@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Thu Jun  8 13:31:30 2017 brout_m
+## Last update Thu Jun  8 13:51:43 2017 brout_m
 ##
 
 SERVER=		server
@@ -49,17 +49,17 @@ endif
 $(SERVER): $(SERVER_OBJ)
 	$(CC) -o $(SERVER) $(SERVER_OBJ) $(INC)
 
-client:
-	echo "ok"
+client: $(SERVER)
+	cp server client
 
 gui:
-	$(MAKE) -C ./src/client
+	$(MAKE) -C ./bonus/client
 
-all: $(SERVER) client
+all: $(SERVER) gui
 
 clean:
 	rm -f $(SERVER_OBJ)
-	$(MAKE) -C ./src/client clean
+	$(MAKE) -C ./bonus/client clean
 
 fclean: clean
 	rm -f $(SERVER)

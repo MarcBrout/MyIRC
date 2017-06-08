@@ -14,10 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
 mainwindow.cpp\
-../com/connect_to_server.c\
-../com/proceed_client_commands.c\
-../com/get_select.c\
-../server/circular_buffer.c
+../../src/com/connect_to_server.c\
+../../src/com/proceed_client_commands.c\
+../../src/com/get_select.c\
+../../src/server/circular_buffer.c
 
 HEADERS  += ../../include/mainwindow.hpp\
 ../../include/circular_tools.h\
