@@ -17,10 +17,12 @@ mainwindow.cpp\
 ../com/connect_to_server.c\
 ../com/proceed_client_commands.c\
 ../com/get_select.c\
-../server/circular_buffer.c
+../server/circular_buffer.c \
+    moc_mainwindow.cpp
 
 HEADERS  += ../../include/mainwindow.h\
 ../../include/circular_tools.h\
-../../include/client.h
+../../include/client.h \
+    ui_mainwindow.h
 
 FORMS    += mainwindow.ui
