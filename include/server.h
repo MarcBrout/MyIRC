@@ -14,5 +14,9 @@
 
 t_server *server_init();
 void client_init(t_client *client);
+int is_client_in_channel(t_server *srv, Socket sock, int channel);
+int is_channel(t_server *srv, char const *channel);
+int is_client(t_server *srv, char const *client);
+int send_all_channel_unique(t_server *srv, Socket sender, char *msg);
 
 #endif /* !SERVER_H_ */

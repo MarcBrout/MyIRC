@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:20:26 2017 brout_m
-** Last update Wed Jun  7 10:48:04 2017 brout_m
+** Last update Thu Jun  8 18:13:46 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -21,18 +21,18 @@ int		send_to_channel(Socket sender, t_server *srv,
   while (sock < (int)channel->clients_count)
     {
       if (!strncmp("PRIVMSG", message, 7) && channel->clients[sock] == sender)
-      {
-        ++sock;
-        continue;
-      }
+	{
+	  ++sock;
+	  continue;
+	}
       if (message[0] == ':')
         reply(srv, channel->clients[sock], message);
       else
         reply(srv, channel->clients[sock], ":%s!%s@%s %s\r\n",
-		    srv->clients[sender].nickname,
-		    srv->clients[sender].username,
-		    srv->clients[sender].address,
-		    message);
+	      srv->clients[sender].nickname,
+	      srv->clients[sender].username,
+	      srv->clients[sender].address,
+	      message);
       ++sock;
     }
   return (0);
@@ -43,7 +43,6 @@ static int	find_pos(int *tab, int find, size_t size)
   size_t	i;
 
   i = 0;
-  printf("SIZE = %lu\n", size);
   while (i < size)
     {
       if (tab[i] == find)

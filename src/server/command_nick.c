@@ -5,10 +5,11 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:27:44 2017 brout_m
-** Last update Fri Jun  2 14:34:28 2017 brout_m
+** Last update Thu Jun  8 18:13:46 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
+#include "server.h"
 #include "commands.h"
 #include "channels.h"
 #include "replies.h"
@@ -41,10 +42,9 @@ static int	check_disponibility(t_server *srv, char *nick)
   return (1);
 }
 
-static int reply_to_client(t_server *srv, Socket sock,
-                            char old[MESSAGE_MAX_SIZE])
+static int	reply_to_client(t_server *srv, Socket sock,
+				char old[MESSAGE_MAX_SIZE])
 {
-
   return (reply(srv, sock, ":%s!%s@%s NICK %s\r\n",
                 old,
                 srv->clients[sock].username,
@@ -57,16 +57,20 @@ static int	ending_nick_command(t_server *srv, Socket sock,
                                     char old[MESSAGE_MAX_SIZE])
 {
   if (srv->clients[sock].channel_count &&
-      (snprintf(out, MESSAGE_MAX_SIZE, ":%s!%s@:%s NICK %s\r\n",
+      (snprintf(out, MESSAGE_MAX_SIZE, ":%s!%s@%s NICK %s\r\n",
                 old, srv->clients[sock].username,
                 srv->clients[sock].address,
                 srv->clients[sock].nickname) < 0 ||
-       user_send_all_channel(sock, srv, out)))
+       send_all_channel_unique(srv, sock, out)))
     return (1);
   if (!strlen(srv->clients[sock].username))
     return (0);
   if (srv->clients[sock].connected)
-    return (reply_to_client(srv, sock, old));
+    {
+      if (srv->clients[sock].channel_count)
+	return (0);
+      return (reply_to_client(srv, sock, old));
+    }
   srv->clients[sock].connected = true;
   return (reply(srv, sock, ":myirc 001 %s :%s %s!%s@%s\r\n",
                 srv->clients[sock].nickname,
@@ -78,7 +82,7 @@ static int	ending_nick_command(t_server *srv, Socket sock,
 int		command_nick(t_server *srv, Socket sock, char *cmd)
 {
   char		out[MESSAGE_MAX_SIZE];
-  char          old[MESSAGE_MAX_SIZE];
+  char		old[MESSAGE_MAX_SIZE];
   char		*line;
 
   strtok(cmd, " ");

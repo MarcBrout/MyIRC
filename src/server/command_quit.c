@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:32:07 2017 brout_m
-** Last update Wed Jun  7 10:40:48 2017 brout_m
+** Last update Thu Jun  8 18:13:45 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -15,7 +15,7 @@
 static void	parting_from_all_channel(t_server *srv, int sock)
 {
   t_client	*client;
-  int pos;
+  int		pos;
   size_t	i;
 
   i = 0;

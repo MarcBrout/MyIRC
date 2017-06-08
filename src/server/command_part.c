@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:28:25 2017 brout_m
-** Last update Wed Jun  7 10:39:11 2017 brout_m
+** Last update Thu Jun  8 18:05:15 2017 brout_m
 */
 #include <stdio.h>
 #include <string.h>
@@ -26,10 +26,27 @@ static int	channel_part(t_server *srv, Socket sock,
   return (0);
 }
 
-int		command_part(t_server *srv, Socket s, char *cmd)
+static int end_part_command(t_server *srv, Socket s,
+                            int channel, char *message)
 {
   char		to_send[MESSAGE_MAX_SIZE];
-  char          cpy[MESSAGE_MAX_SIZE];
+
+  memset(to_send, 0, MESSAGE_MAX_SIZE);
+  if (*message && *&message[1])
+    {
+      if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s \"%s\"",
+		   srv->channels[channel].name, &message[1]) < 0)
+	return (1);
+    }
+  else if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s",
+                    srv->channels[channel].name) < 0)
+    return (1);
+  return (channel_part(srv, s, channel, to_send));
+}
+
+int		command_part(t_server *srv, Socket s, char *cmd)
+{
+  char		cpy[MESSAGE_MAX_SIZE];
   char		*message;
   char		*line;
   char		*name;
@@ -44,16 +61,6 @@ int		command_part(t_server *srv, Socket s, char *cmd)
     return (reply(srv, s, "403 %s %s\r\n", name, replies[ERR_NOSUCHCHANNEL]));
   if (!already_in_channel(srv, s, channel))
     return (reply(srv, s, "442 %s %s\r\n", name, replies[ERR_NOTONCHANNEL]));
-  memset(to_send, 0, MESSAGE_MAX_SIZE);
   message = strstr(cpy, name) + strlen(name) + 1;
-  if (*message && *&message[1])
-    {
-      if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s \"%s\"",
-		   srv->channels[channel].name, &message[1]) < 0)
-	return (1);
-    }
-  else if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s",
-		    srv->channels[channel].name) < 0)
-    return (1);
-  return (channel_part(srv, s, channel, to_send));
+  return end_part_command(srv, s, channel, message);
 }

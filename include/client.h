@@ -5,9 +5,8 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:31:52 2017 brout_m
-** Last update Wed Jun  7 10:58:14 2017 brout_m
+** Last update Thu Jun  8 18:14:26 2017 brout_m
 */
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -19,7 +18,6 @@ extern "C" {
 # include "types.h"
 
 typedef struct s_client_data	t_client_data;
-
 
 struct				s_client_data
 {

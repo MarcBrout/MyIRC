@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:29:14 2017 brout_m
-** Last update Fri Jun  2 14:45:27 2017 brout_m
+** Last update Thu Jun  8 18:05:45 2017 brout_m
 */
 #include <string.h>
 #include <stdio.h>
@@ -14,7 +14,8 @@
 
 char const		*replies[ERR_END];
 
-int			reply(t_server *srv, Socket sock, char *const fmt, ...)
+int			reply(t_server *srv, Socket sock,
+			      char *const fmt, ...)
 {
   static char		buff[MESSAGE_MAX_SIZE];
   va_list		val;
@@ -43,6 +44,7 @@ int			command_pass(t_server *srv, Socket sock, char *cmd)
     return (reply(srv, sock, "%s %s %s\r\n", "461", line,
                   replies[ERR_NEEDMOREPARAMS]));
   if (strcmp(password, line2))
-    return (reply(srv, sock, "%s %s\r\n", "464", replies[ERR_PASSWDMISMATCH]));
+    return (reply(srv, sock, "%s %s\r\n", "464",
+		  replies[ERR_PASSWDMISMATCH]));
   return (0);
 }
