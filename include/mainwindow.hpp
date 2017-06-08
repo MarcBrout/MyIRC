@@ -63,6 +63,7 @@ private:
     t_client_data               m_client;
     std::int32_t                m_curChannel;
     std::vector<std::string>    m_channels;
+    bool                        m_enter;
 };
 
 typedef struct s_client_command		t_client_command;
