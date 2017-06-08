@@ -84,7 +84,7 @@ int			command_privmsg(t_server *srv, Socket sock, char *cmd)
   if (!(target = strtok(NULL, " ")))
     return (reply(srv, sock, "%s %s (%s)\r\n", "411",
                   replies[ERR_NORECIPIENT], line));
-  if (*(msg = (strstr(cpy, target)) + strlen(target) + 1) != ':' || !&msg[1])
+  if (*(msg = (strstr(cpy, target)) + strlen(target) + 1) != ':' || !(&msg[1]))
     return (reply(srv, sock, "%s %s\r\n", "412", replies[ERR_NOTEXTTOSEND]));
   if (snprintf(out, MESSAGE_MAX_SIZE, "PRIVMSG %s :%s", target, &msg[1]) < 0)
     return (1);
