@@ -45,11 +45,15 @@ int		command_part(t_server *srv, Socket s, char *cmd)
   message = strtok(NULL, " ");
   if (message)
     {
-      if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s :\"%s\"",
+      if (snprintf(to_send, MESSAGE_MAX_SIZE, ":%s!%s@%s PART %s :\"%s\"",
+                   srv->clients[s].nickname, srv->clients[s].username,
+                   srv->clients[s].address,
 		   srv->channels[channel].name, message) < 0)
 	return (1);
     }
-  else if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s",
+  else if (snprintf(to_send, MESSAGE_MAX_SIZE, ":%s!%s@%s PART %s",
+                    srv->clients[s].nickname, srv->clients[s].username,
+                    srv->clients[s].address,
 		    srv->channels[channel].name) < 0)
     return (1);
   return (channel_part(srv, s, channel, to_send));

@@ -66,7 +66,7 @@ static int	ending_nick_command(t_server *srv, Socket sock,
   if (srv->clients[sock].connected)
     return (reply_to_client(srv, sock, old));
   srv->clients[sock].connected = true;
-  return (reply(srv, sock, "001 %s :%s %s!%s@%s\r\n",
+  return (reply(srv, sock, ":myirc 001 %s :%s %s!%s@%s\r\n",
                 srv->clients[sock].nickname,
                 replies[RPL_WELCOME],
                 srv->clients[sock].nickname, srv->clients[sock].username,

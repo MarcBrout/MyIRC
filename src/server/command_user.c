@@ -58,7 +58,9 @@ static int	login_successful(t_server *srv,
   if (!strlen(srv->clients[sock].nickname))
     return (0);
   srv->clients[sock].connected = true;
-  return (reply(srv, sock, "%s %s %s!%s@%s\r\n", "001", replies[RPL_WELCOME],
+  return (reply(srv, sock, ":myirc 001 %s :s %s!%s@%s\r\n",
+                srv->clients[sock].nickname,
+                replies[RPL_WELCOME],
                 srv->clients[sock].nickname, srv->clients[sock].username,
                 srv->address));
 }
