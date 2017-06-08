@@ -29,11 +29,14 @@ static int	channel_part(t_server *srv, Socket sock,
 int		command_part(t_server *srv, Socket s, char *cmd)
 {
   char		to_send[MESSAGE_MAX_SIZE];
+  char          cpy[MESSAGE_MAX_SIZE];
   char		*message;
   char		*line;
   char		*name;
   int		channel;
 
+  memset(cpy, 0, MESSAGE_MAX_SIZE);
+  strcat(cpy, cmd);
   line = strtok(cmd, " ");
   if (!(name = strtok(NULL, " ")))
     return (needmoreparams(srv, s, line));
@@ -42,18 +45,14 @@ int		command_part(t_server *srv, Socket s, char *cmd)
   if (!already_in_channel(srv, s, channel))
     return (reply(srv, s, "442 %s %s\r\n", name, replies[ERR_NOTONCHANNEL]));
   memset(to_send, 0, MESSAGE_MAX_SIZE);
-  message = strtok(NULL, " ");
-  if (message)
+  message = strstr(cpy, name) + strlen(name) + 1;
+  if (*message && *&message[1])
     {
-      if (snprintf(to_send, MESSAGE_MAX_SIZE, ":%s!%s@%s PART %s :\"%s\"",
-                   srv->clients[s].nickname, srv->clients[s].username,
-                   srv->clients[s].address,
-		   srv->channels[channel].name, message) < 0)
+      if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s \"%s\"",
+		   srv->channels[channel].name, &message[1]) < 0)
 	return (1);
     }
-  else if (snprintf(to_send, MESSAGE_MAX_SIZE, ":%s!%s@%s PART %s",
-                    srv->clients[s].nickname, srv->clients[s].username,
-                    srv->clients[s].address,
+  else if (snprintf(to_send, MESSAGE_MAX_SIZE, "PART %s",
 		    srv->channels[channel].name) < 0)
     return (1);
   return (channel_part(srv, s, channel, to_send));

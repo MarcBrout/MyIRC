@@ -5,7 +5,7 @@
 // Login   <benjamin.duhieu@epitech.eu>
 //
 // Started on  Tue Jun  6 15:57:11 2017 duhieu_b
-// Last update Thu Jun  8 09:51:54 2017 duhieu_b
+// Last update Thu Jun  8 15:14:13 2017 brout_m
 //
 
 #include <QtWidgets/QApplication>
@@ -19,10 +19,11 @@ int main(int argc, char *argv[])
         QApplication a(argc, argv);
         MainWindow w;
         w.show();
+	return a.exec();
     }
     catch (std::exception const &e)
     {
         std::cout << e.what() << std::endl;
+	return (84);
     }
-    return a.exec();
 }

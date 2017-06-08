@@ -34,6 +34,7 @@ public:
     void                        getNames();
     void                        getQuit();
     void                        getMsg();
+    void                        getError();
 
 private slots:
     void                        on_lineEdit_returnPressed();

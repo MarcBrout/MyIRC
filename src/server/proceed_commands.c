@@ -138,6 +138,7 @@ int			proceed_commands(t_server *srv)
 	{
 	  memset(cmd, 0, MESSAGE_MAX_SIZE);
 	  strfromcircular(&srv->clients[sock].r, cmd);
+          printf("cmd : %s\n", cmd);
 	  remove_prefix(cmd);
 	  if (processing(srv, sock, cmd))
 	    return (1);

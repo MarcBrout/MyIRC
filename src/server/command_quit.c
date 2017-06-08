@@ -15,13 +15,17 @@
 static void	parting_from_all_channel(t_server *srv, int sock)
 {
   t_client	*client;
+  int pos;
   size_t	i;
 
   i = 0;
   client = &srv->clients[sock];
   while (i < client->channel_count)
     {
-      parting_from_channel(srv, sock, client->channels[i] - 1);
+      pos = client->channels[i] - 1;
+      parting_from_channel(srv, sock, pos);
+      if (srv->channels[pos].clients_count == 0)
+        memset(&srv->channels[pos], 0, sizeof(t_channel));
       ++i;
     }
 }

@@ -19,7 +19,8 @@ static int	list_one_channel_names(t_server *srv, Socket sock,
   size_t	i;
 
   i = 0;
-  if (reply(srv, sock, "353 %s :", chan->name))
+  if (reply(srv, sock, ":myirc 353 %s = %s :", srv->clients[sock].nickname,
+            chan->name))
     return (1);
   while (i < chan->clients_count)
     {
@@ -30,7 +31,9 @@ static int	list_one_channel_names(t_server *srv, Socket sock,
 	return (1);
       ++i;
     }
-  return (reply(srv, sock, "\r\n366 %s :End of NAMES list\r\n", chan->name));
+  return (reply(srv, sock, "\r\n:myirc 366 %s %s :End of /NAMES list\r\n",
+                srv->clients[sock].nickname,
+                chan->name));
 }
 
 static int	list_all_channels_names(t_server *srv, Socket sock)

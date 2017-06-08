@@ -17,8 +17,15 @@ static int	add_to_list(t_server *srv, Socket sock,
 			    t_channel *channel)
 {
   if (!strlen(channel->topic))
-    return (reply(srv, sock, "322 %s\r\n", channel->name));
-  return (reply(srv, sock, "322 %s :%s\r\n", channel->name, channel->topic));
+    return (reply(srv, sock, ":myirc 322 %s %s %d\r\n",
+                  srv->clients[sock].nickname,
+                  channel->name,
+                  channel->clients_count));
+  return (reply(srv, sock, ":myric 322 %s %s %d :%s\r\n",
+                srv->clients[sock].nickname,
+                channel->name,
+                channel->clients_count,
+                channel->topic));
 }
 
 int		command_list(t_server *srv, Socket sock, char *cmd)
@@ -35,6 +42,8 @@ int		command_list(t_server *srv, Socket sock, char *cmd)
 	}
       ++i;
     }
-  reply(srv, sock, "323 :%s\r\n", "End of LIST");
+  reply(srv, sock, ":myirc 323 %s :%s\r\n",
+        srv->clients[sock].nickname,
+        "End of LIST");
   return (0);
 }
