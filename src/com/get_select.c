@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:34:12 2017 brout_m
-** Last update Sat Jun  3 16:36:26 2017 brout_m
+** Last update Wed Jun  7 10:45:02 2017 brout_m
 */
 #include <string.h>
 #include <stdlib.h>
@@ -101,10 +101,10 @@ static int		read_client(t_client *client, Socket sock)
 
 extern "C" int		get_select(t_client_data *data)
 {
-  struct timeval        tim;
+  struct timeval	tim;
   fd_set		reads;
   fd_set		writes;
-  int retval;
+  int			retval;
 
   FD_ZERO(&reads);
   FD_ZERO(&writes);

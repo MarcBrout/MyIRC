@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:11:26 2017 brout_m
-** Last update Wed May 31 11:11:45 2017 brout_m
+** Last update Wed Jun  7 10:59:36 2017 brout_m
 */
 #ifndef CHANNELS_H_
 # define CHANNELS_H_
@@ -17,4 +17,4 @@ int send_to_channel(Socket sender, t_server *srv,
 int user_send_all_channel(Socket sender, t_server *srv, char *message);
 void parting_from_channel(t_server *srv, Socket sock, int channel);
 
-#endif /* !MYIRC_CHANNELS_H_ */
+#endif /* !CHANNELS_H_ */

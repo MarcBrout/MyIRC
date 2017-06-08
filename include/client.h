@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:31:52 2017 brout_m
-** Last update Sat Jun  3 16:33:03 2017 brout_m
+** Last update Wed Jun  7 10:58:14 2017 brout_m
 */
 
 #ifdef __cplusplus
@@ -18,14 +18,15 @@ extern "C" {
 # include <stdint.h>
 # include "types.h"
 
-typedef struct s_client_data t_client_data;
+typedef struct s_client_data	t_client_data;
 
 
-struct s_client_data {
-  t_client client;
-  Socket sock;
-  char cmd[MESSAGE_MAX_SIZE];
-  char prefix[MESSAGE_MAX_SIZE];
+struct				s_client_data
+{
+  t_client			client;
+  Socket			sock;
+  char				cmd[MESSAGE_MAX_SIZE];
+  char				prefix[MESSAGE_MAX_SIZE];
 };
 
 extern "C" int connect_to_server(t_client_data *data,

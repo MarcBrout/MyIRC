@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Wed May 31 11:12:35 2017 brout_m
-** Last update Wed May 31 11:12:42 2017 brout_m
+** Last update Wed Jun  7 10:58:32 2017 brout_m
 */
 
 #ifndef COMMANDS_H_
@@ -13,6 +13,7 @@
 
 # include "types.h"
 
+int send_to_client(t_server *srv, int sen, int client, char *msg);
 int find_channel(t_server *srv, char *chan);
 int already_in_channel(t_server *srv, Socket sock, int channel);
 int command_pass(t_server *srv, Socket sock, char *cmd);
@@ -25,4 +26,4 @@ int command_list(t_server *srv, Socket sock, char *cmd);
 int command_names(t_server *srv, Socket sock, char *cmd);
 int command_privmsg(t_server *srv, Socket sock, char *cmd);
 
-#endif /* !MYIRC_COMMANDS_H_ */
+#endif /* !COMMANDS_H_ */

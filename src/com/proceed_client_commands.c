@@ -5,14 +5,14 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:36:33 2017 brout_m
-** Last update Tue Jun  6 13:37:15 2017 duhieu_b
+** Last update Wed Jun  7 10:48:01 2017 brout_m
 */
 #include <string.h>
 #include "client.h"
 #include "proceed.h"
 
-extern "C" void		remove_prefix(char cmd[MESSAGE_MAX_SIZE],
-			      char prefix[MESSAGE_MAX_SIZE])
+extern "C" void	remove_prefix(char cmd[MESSAGE_MAX_SIZE],
+				      char prefix[MESSAGE_MAX_SIZE])
 {
   int			i;
   int			j;

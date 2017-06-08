@@ -5,12 +5,12 @@
 // Login   <benjamin.duhieu@epitech.eu>
 //
 // Started on  Tue Jun  6 15:57:11 2017 duhieu_b
-// Last update Wed Jun  7 00:22:12 2017 brout_m
+// Last update Thu Jun  8 09:51:54 2017 duhieu_b
 //
 
 #include <QtWidgets/QApplication>
 #include <iostream>
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 
 int main(int argc, char *argv[])
 {

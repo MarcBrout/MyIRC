@@ -5,7 +5,7 @@
 // Login   <benjamin.duhieu@epitech.eu>
 //
 // Started on  Tue Jun  6 15:57:26 2017 duhieu_b
-// Last update Thu Jun  8 09:13:51 2017 duhieu_b
+// Last update Thu Jun  8 09:51:56 2017 duhieu_b
 //
 
 #include <QtWidgets/QWidget>
@@ -14,7 +14,7 @@
 #include <cstring>
 #include <map>
 #include <sys/socket.h>
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 #include "circular_tools.h"
 #include "client.h"
@@ -331,7 +331,10 @@ void    MainWindow::getQuit()
     l_msg = l_msg.substr(5);
     std::vector<std::string>::iterator l_it = std::find(m_channels.begin(), m_channels.end(), l_msg);
     if (l_it != m_channels.end())
+    {
         m_channels.erase(l_it);
+        ui->plainTextEdit->insertPlainText("Quit " + QString::fromStdString(*l_it) + "channel\n");
+    }
 }
 
 void    MainWindow::getMsg()
@@ -339,6 +342,14 @@ void    MainWindow::getMsg()
     std::string l_msg(m_client.cmd);
     l_msg = l_msg.substr(8);
     ui->plainTextEdit->insertPlainText(QString::fromStdString(l_msg + "\n"));
+}
+
+void    MainWindow::getError()
+{
+    std::string l_msg;
+
+    l_msg = l_msg.substr(4);
+    ui->plainTextEdit->insertPlainText("Error : " + QString::fromStdString(l_msg + "\n"));
 }
 
 void MainWindow::processing()
@@ -356,13 +367,16 @@ void MainWindow::processing()
         }
         ++i;
     }
+    if (i == 9)
+    {
+        getError();
+    }
 }
 
 void MainWindow::on_lineEdit_returnPressed()
 {
     m_enter = true;
     sendMessage();
-    //ui->plainTextEdit->insertPlainText(ui->lineEdit->text() + "\n");
     ui->lineEdit->clear();
     m_enter = false;
 }

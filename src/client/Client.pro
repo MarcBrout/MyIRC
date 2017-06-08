@@ -20,7 +20,7 @@ mainwindow.cpp\
 ../server/circular_buffer.c \
     moc_mainwindow.cpp
 
-HEADERS  += ../../include/mainwindow.h\
+HEADERS  += ../../include/mainwindow.hpp\
 ../../include/circular_tools.h\
 ../../include/client.h \
     ui_mainwindow.h

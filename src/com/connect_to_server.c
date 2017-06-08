@@ -5,7 +5,7 @@
 ** Login   <marc.brout@epitech.eu>
 **
 ** Started on  Sat Jun  3 16:33:27 2017 brout_m
-** Last update Tue Jun  6 13:37:00 2017 duhieu_b
+** Last update Wed Jun  7 10:48:02 2017 brout_m
 */
 #include <stdio.h>
 #include <sys/socket.h>
@@ -17,7 +17,7 @@ extern "C" int		connect_to_server(t_client_data *data,
 					  const char *address, uint16_t port)
 {
   Socket		sock;
-  sockaddr_in_t		add;
+  sockaddr_in_t	add;
   int			ok;
   struct protoent	*pe;
 
