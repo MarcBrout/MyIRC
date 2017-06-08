@@ -54,6 +54,20 @@ int		send_to_client(t_server *srv, int sen, int client, char *msg)
   return (0);
 }
 
+int is_client_in_channel(t_server *srv, Socket sock, int channel)
+{
+  size_t client;
+
+  client = 0;
+  while (client < srv->channels[channel].clients_count)
+  {
+    if (srv->channels[channel].clients[client] == sock)
+      return (1);
+    ++client;
+  }
+  return (0);
+}
+
 int			command_privmsg(t_server *srv, Socket sock, char *cmd)
 {
   char			out[MESSAGE_MAX_SIZE];
@@ -70,11 +84,9 @@ int			command_privmsg(t_server *srv, Socket sock, char *cmd)
   if (!(target = strtok(NULL, " ")))
     return (reply(srv, sock, "%s %s (%s)\r\n", "411",
                   replies[ERR_NORECIPIENT], line));
-  if (*(msg = (strstr(cpy, target)) + strlen(target) + 1) != ':' ||
-      &msg[1] == 0)
+  if (*(msg = (strstr(cpy, target)) + strlen(target) + 1) != ':' || !(&msg[1]))
     return (reply(srv, sock, "%s %s\r\n", "412", replies[ERR_NOTEXTTOSEND]));
-  if (snprintf(out, MESSAGE_MAX_SIZE, "PRIVMSG %s :%s",
-               target, &msg[1]) < 0)
+  if (snprintf(out, MESSAGE_MAX_SIZE, "PRIVMSG %s :%s", target, &msg[1]) < 0)
     return (1);
   if ((channel = is_channel(srv, target)) < 0)
     {
@@ -83,5 +95,8 @@ int			command_privmsg(t_server *srv, Socket sock, char *cmd)
 		      replies[ERR_NOSUCHNICK]));
       return (send_to_client(srv, sock, channel, out));
     }
+  if (!is_client_in_channel(srv, sock, channel))
+    reply(srv, sock, ":myirc 404 %s %s %s\r\n", srv->clients[sock].nickname,
+          srv->channels[channel].name, replies[ERR_CANNOTSENDTOCHAN]);
   return (send_to_channel(sock, srv, &srv->channels[channel], out));
 }
