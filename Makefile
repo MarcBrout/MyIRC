@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Wed Jun  7 10:17:33 2017 brout_m
+## Last update Thu Jun  8 13:31:30 2017 brout_m
 ##
 
 SERVER=		server
@@ -50,6 +50,9 @@ $(SERVER): $(SERVER_OBJ)
 	$(CC) -o $(SERVER) $(SERVER_OBJ) $(INC)
 
 client:
+	echo "ok"
+
+gui:
 	$(MAKE) -C ./src/client
 
 all: $(SERVER) client
