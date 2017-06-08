@@ -9,12 +9,20 @@
 //
 
 #include <QtWidgets/QApplication>
+#include <iostream>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    try
+    {
+        QApplication a(argc, argv);
+        MainWindow w;
+        w.show();
+    }
+    catch (std::exception const &e)
+    {
+        std::cout << e.what() << std::endl;
+    }
     return a.exec();
 }
