@@ -5,7 +5,7 @@
 ## Login   <marc.brout@epitech.eu>
 ##
 ## Started on  Wed May 24 23:04:21 2017 brout_m
-## Last update Thu Jun  8 13:51:43 2017 brout_m
+## Last update Thu Jun  8 16:43:55 2017 brout_m
 ##
 
 SERVER=		server
@@ -53,6 +53,7 @@ client: $(SERVER)
 	cp server client
 
 gui:
+	mv ./bonus/client/Makefile2 ./bonus/client/Makefile
 	$(MAKE) -C ./bonus/client
 
 all: $(SERVER) gui
@@ -62,6 +63,7 @@ clean:
 	$(MAKE) -C ./bonus/client clean
 
 fclean: clean
+	mv ./bonus/client/Makefile ./bonus/client/Makefile2
 	rm -f $(SERVER)
 
 re: fclean all

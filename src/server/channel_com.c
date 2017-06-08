@@ -25,13 +25,14 @@ int		send_to_channel(Socket sender, t_server *srv,
         ++sock;
         continue;
       }
-
-	  if (reply(srv, channel->clients[sock], ":%s!%s@%s %s\r\n",
+      if (message[0] == ':')
+        reply(srv, channel->clients[sock], message);
+      else
+        reply(srv, channel->clients[sock], ":%s!%s@%s %s\r\n",
 		    srv->clients[sender].nickname,
 		    srv->clients[sender].username,
 		    srv->clients[sender].address,
-		    message))
-            return (1);
+		    message);
       ++sock;
     }
   return (0);

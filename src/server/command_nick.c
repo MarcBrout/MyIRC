@@ -57,7 +57,9 @@ static int	ending_nick_command(t_server *srv, Socket sock,
                                     char old[MESSAGE_MAX_SIZE])
 {
   if (srv->clients[sock].channel_count &&
-      (snprintf(out, MESSAGE_MAX_SIZE, "NICK %s",
+      (snprintf(out, MESSAGE_MAX_SIZE, ":%s!%s@:%s NICK %s\r\n",
+                old, srv->clients[sock].username,
+                srv->clients[sock].address,
                 srv->clients[sock].nickname) < 0 ||
        user_send_all_channel(sock, srv, out)))
     return (1);
